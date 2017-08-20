@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+	<link rel="stylesheet" href="{% static '/css/cart.css' %}">
+{% endblock %}
+{% block title %}
+	Your Shopping Cart - AIRY
+{% endblock %}
+{% block body %}
+	<div class="container ma-8">
+		<span>Shopping Cart</span>
+		<div class="dot-divider"></div>
+		<div class="product-list">
+			<div class="flex-col">
+				<img src="{% static 'imgs/product_thumbnail.jpg' %}" alt="product-img" width="160" height="160">
+			</div>
+			<div class="flex-col">
+				<strong class="ml-16"><a href="#" class="unstyled-link">Condom A</a></strong>
+				<div class="flex-row ml-16 align-items-center">
+					<button class="btn btn-default btn-sm"> -</button>
+					<input type="number" name="product-quantity" id="product-quantity" value="1" class="input-sm">
+					<button class="btn btn-default btn-sm"> +</button>
+				</div>
+				<span class="ml-16 mt-16">
+          <strong>Price: </strong>
+          <span> $0.99 </span><br>
+          <a href="#" class="unstyled-link text-muted mt-16">remove</a><br>
+        </span>
+			</div>
+		</div>
+		<div class="flex-row space-between">
+		</div>
+		<div class="dot-divider"></div>
+		<div class="flex-row space-between">
+			<strong class="text-l">SUBTOTAL: </strong>
+			<span class="text-r">$0.00</span>
+		</div>
+		<form action="" method="post" class="form-shipping">
+			<h1>Shipping</h1>
+			<div class="form-group">
+				<label for="">Country</label><br>
+				<select name="" id="" class="full-width">
+					<option value="A">A</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="">Zip / Postal Code</label>
+				<input type="number" name="" id="">
+			</div>
+			<button class="btn btn-white mt-16 mb-16">+ Calculate Shipping</button>
+			<div class="flex-row space-between mt-16 mb-16">
+				<strong>Grand Total: </strong>
+				<span>$0.99</span>
+			</div>
+			<button class="btn btn-default">PAY BY CREDIT/DEBIT</button>
+			<strong class="text-c mt-16 mb-16"> - OR - </strong>
+			<a class="btn btn-white text-c" href="{% url 'main:catalogue' %}">CONTINUE SHOPPING</a>
+		</form>
+	</div>
+{% endblock %}
+</body>
+</html>

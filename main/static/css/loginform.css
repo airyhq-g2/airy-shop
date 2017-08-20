@@ -1,0 +1,64 @@
+.container {
+  height: 100%;
+  margin: 16px;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: black;
+}
+
+.login-form-input {
+  border: none;
+  background: lightgray;
+  padding: 10px 15px 10px 15px;
+}
+
+
+.login-form-title {
+  margin-bottom: 8px;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    justify-content: flex-start;
+  }
+  .login-form {
+    max-width: 800px;
+    margin: 0px 88px 0px 88px;
+  }
+  .form-group {
+    max-width: 400px;
+  }
+
+  .sign-in-section {
+    max-width: 360px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .sign-up-section {
+    max-width: 640px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .login-form {
+    align-self: center;
+    min-width: 800px;
+    margin: 0px 88px 0px 88px;
+  }
+  
+}

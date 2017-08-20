@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+	<link rel="stylesheet" href="{% static 'css/product-detail.css' %}">
+{% endblock %}
+{% block title %}
+	Product Name - AIRY
+{% endblock %}
+{% block body %}
+	<a href="{% url 'main:catalogue' %}" class="unstyled-link">Back to Catalogue</a>
+	<div class="container bg-light-brown mt-16">
+		<div class="product-item mb-16">
+			<img class="product-img" src="{% static 'imgs/product_thumbnail.jpg' %}" alt="product-img">
+		</div>
+		<div class="add-desktop">
+			<div class="ma-16">
+				<strong>Product Name</strong><br>
+				<small class="text-muted">Category</small>
+			</div>
+			<div class="ma-16">
+				<span>$0.99</span>
+			</div>
+			<div class="add-tablet ma-8">
+				<div class="dot-divider"></div>
+				<form method="post" class="form-flex-col">
+					<label for="select-size">Select Size:</label>
+					<select name="select-size" id="select-size">
+						<option value="xs">X-small</option>
+						<option value="s">Small</option>
+						<option value="m">Medium</option>
+						<option value="l">Large</option>
+						<option value="xl">X-Large</option>
+					</select>
+					<div class="ma-16"></div>
+					<input class="btn btn-brown" type="submit" value="ADD TO CART">
+				</form>
+				<div class="flex-row ma-16 space-around">
+					<a class="btn btn-icon">
+						<img src="{% static 'imgs/favorite_black.svg' %}" alt="wish-list-icon">
+						<span class="btn-icon-span">Add to wish list</span>
+					</a>
+					<a class="btn btn-icon">
+						<img src="{% static 'imgs/share_black.svg' %}" alt="share-icon">
+						<span class="btn-icon-span">Share</span>
+					</a>
+				</div>
+				<div class="dot-divider"></div>
+				<div class="flex-row ma-16 space-around">
+					<a class="btn btn-icon" href="#product-detail">
+						<img src="{% static 'imgs/eye_black.svg' %}" alt="product detail">
+						<span class="btn-icon-span">Product Detail</span>
+					</a>
+					<a class="btn btn-icon" href="">
+						<img src="{% static 'imgs/local_shipping_black.svg' %}" alt="delivery">
+						<span class="btn-icon-span">Delivery</span>
+					</a>
+				</div>
+				<div class="dot-divider"></div>
+			</div>
+		</div>
+	</div>
+	<div id="product-detail" class="product-detail bg-brown">
+		<h3><strong>Product Details</strong></h3>
+		<p>
+			Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum velit tempora est. Nihil error et voluptate
+			placeat, explicabo sint repudiandae perferendis tempore alias autem officiis, voluptatibus, quam accusamus neque
+			inventore?
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae commodi dolore doloremque eos excepturi hic illum
+			ipsum molestias mollitia officia omnis perspiciatis possimus, quaerat quidem repellendus temporibus veniam
+			voluptatibus voluptatum.
+		</p>
+	</div>
+	<div class="add-mobile bg-white">
+		<div class="toolbar">
+			<div>
+				<h3>Choose your product</h3>
+			</div>
+			<div>
+				<button class="btn">
+					<img src="{% static 'imgs/close_black.svg' %}" alt="close">
+				</button>
+			</div>
+		</div>
+		<form method="post" class="blue">
+			<label for="select-size">Select Size:</label>
+			<select name="select-size" id="select-size">
+				<option value="xs">X-small</option>
+				<option value="s">Small</option>
+				<option value="m">Medium</option>
+				<option value="l">Large</option>
+				<option value="xl">X-Large</option>
+			</select>
+			<div class="dot-divider"></div>
+			<input class="btn btn-white" type="submit" value="ADD TO CART">
+		</form>
+	</div>
+	<div class="toolbar bottom-fixed bg-white">
+		<div>
+			<button class="btn btn-white ml-16 mb-8">ADD</button>
+		</div>
+		<div class="mr-16">
+			<strong>$0.99</strong>
+		</div>
+	</div>
+{% endblock %}
+</body>
+</html>

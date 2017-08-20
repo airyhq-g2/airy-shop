@@ -1,0 +1,109 @@
+body {
+  background: url("../imgs/bg.png") no-repeat center center fixed;
+  background-size: cover; 
+  color: #ffffff;
+}
+
+.brand-logo {
+  width: auto;
+  height: 100%;
+}
+
+.nav {
+  background: black;
+}
+
+.container {
+  padding: 64px 16px 64px 16px;
+  background: black;
+  margin-top: 72px;
+}
+
+.promotion-title {
+  margin: 0;
+  text-align: center;
+  font-size: 35vw;
+}
+
+.promotion-subtitle {
+  margin: 0 16px 0 0;
+  font-weight: bold;
+  text-align: right;
+}
+
+.sidebar {
+  display: none; 
+}
+
+.sidebar-ul {
+  margin-left: 20px;
+  padding: 0px;
+  list-style: none;
+  text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 72px;
+    margin-top: 192px;
+    flex-direction: row;
+  }
+  .nav {
+    display: none;
+  }
+  .sidebar {
+    flex-grow: 2;
+    margin-left: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .promotion {
+    flex-grow: 2;
+    margin-left: 32px;
+  }
+  
+  .promotion-title {
+    text-align: center;
+    font-size: 25vw;
+  }
+
+  .promotion-subtitle {
+    margin: 0 48px 0 0;
+  }
+
+}
+
+@media screen and (min-width: 1440px) {
+  .nav {
+    display: none;
+  }
+  body {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+  .container {
+    margin-top: 136px;
+  }
+
+  .sidebar {
+    margin-left: 10%; 
+    min-width: 200px;
+  }
+
+  .promotion {
+    margin-right: 10%;
+    margin-left: 48px;
+  }
+
+  .promotion-title {
+    text-align: center;
+    font-size: 20vw;
+  }
+
+  .promotion-subtitle {
+    margin: 0 0 0 0;
+    font-size: 2.5vw;
+  }
+}

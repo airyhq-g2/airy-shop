@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+	<link rel="stylesheet" href="{% static 'css/catalogue.css' %}">
+{% endblock %}
+{% block title %}
+	Catalogue - AIRY
+{% endblock %}
+{% block body %}
+	<div class="product-table">
+		<div class="product-item">
+			<div class="product-overlay">
+				<a href="{% url 'main:product_detail' %}" class="product-overlay-text flex-col unstyled-link">
+					<h3>Condom</h3>
+					<p>0.99$</p>
+					<a href="{% url 'main:product_detail' %}" class="btn btn-icon">
+						<img src="{% static 'imgs/eye_black.svg' %}" alt="view-garment">
+						<span class="btn-icon-span">View Garment</span>
+					</a>
+				</a>
+			</div>
+			<img src="{% static 'imgs/product_thumbnail.jpg' %}" alt="product-thumbnail" class="product-img">
+		</div>
+	</div>
+{% endblock %}
+</body>
+</html>

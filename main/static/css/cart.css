@@ -1,0 +1,27 @@
+.product-list {
+  display: flex;
+}
+
+.form-shipping {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1024px) {
+  
+  /* body { */
+    /* display: flex; */
+    /* justify-content: center; */
+  /* } */
+
+  /* .container { */
+    /* min-width: 70%;   */
+  /* } */
+  .product-list {
+    justify-content: space-between;
+  }
+  .form-shipping {
+    align-self: flex-end;
+    min-width: 25%;
+  }
+}
