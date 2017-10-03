@@ -1,12 +1,11 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
+
+class UserInfo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    address = models.TextField()
     birth_date = models.DateField(null=True, blank=True)
-# Create your models here.
 
 class Product(models.Model):
     name = models.TextField(max_length=1000,null=False)
@@ -16,8 +15,8 @@ class Product(models.Model):
     pic = models.ImageField(upload_to="media/", default="static/imgs/product_thumbnail.jpg")
 
 class Order(models.Model):
-    user = models.ForeignKey(Profile)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product)
     amount = models.IntegerField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
     status = models.IntegerField()
