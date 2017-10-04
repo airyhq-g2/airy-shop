@@ -1,8 +1,10 @@
 from django.contrib.auth import login, authenticate, views
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views.generic import ListView
 
 from .forms import SignUpForm
+from .models import Product
 
 
 # Create your views here.
@@ -13,6 +15,10 @@ def indexView(request):
 def catalogueView(request):
     return render(request, 'main/catalogue.html')
 
+
+class CatalogueView(ListView):
+    template_name = 'main/catalogue.html'
+    model = Product
 
 def detailView(request):
     return render(request, 'main/product-detail.html')

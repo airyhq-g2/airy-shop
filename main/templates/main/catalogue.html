@@ -8,20 +8,20 @@
 {% endblock %}
 {% block body %}
 	<div class="product-table">
-		<div class="product-item">
+        {% for product in object_list %}
+            <div class="product-item">
 			<div class="product-overlay">
 				<a href="{% url 'main:product_detail' %}" class="product-overlay-text flex-col unstyled-link">
-					<h3>Condom</h3>
-					<p>0.99$</p>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.price }}$</p>
 					<a href="{% url 'main:product_detail' %}" class="btn btn-icon">
 						<img src="{% static 'imgs/eye_black.svg' %}" alt="view-garment">
 						<span class="btn-icon-span">View Garment</span>
 					</a>
 				</a>
 			</div>
-			<img src="{% static 'imgs/product_thumbnail.jpg' %}" alt="product-thumbnail" class="product-img">
+                <img src="{{ product.pic.url }}" alt="product-thumbnail" class="product-img">
 		</div>
+        {% endfor %}
 	</div>
 {% endblock %}
-</body>
-</html>

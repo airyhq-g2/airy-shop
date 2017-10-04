@@ -12,7 +12,10 @@ class Product(models.Model):
     desc = models.TextField(max_length=1000)
     price = models.FloatField()
     amount = models.IntegerField()
-    pic = models.ImageField(upload_to="media/", default="static/imgs/product_thumbnail.jpg")
+    pic = models.ImageField(upload_to="imgs/", default="static/imgs/product_thumbnail.jpg")
+
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
