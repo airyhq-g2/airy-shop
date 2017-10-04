@@ -1,116 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	{% load static %}
-	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-	<link rel="stylesheet" href="{% static 'css/common.css' %}">
-	{% block style %}
-	{% endblock %}
-	<title>
-		{% block title %}
-		{% endblock %}
-	</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    {% block style %}
+    {% endblock %}
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
 </head>
 <body>
-<nav class="nav">
-	<div class="brand">
-		<a href="{% url 'main:index' %}">
-			<img src="{% static 'imgs/brand_logo_inverse.png' %}" alt="brand-logo" class="brand-logo">
-		</a>
-	</div>
-	<div class="action">
-		<button class="btn btn-icon" id="basket-toggler">
-			<img src="{% static 'imgs/shopping_basket_black.svg' %}" alt="shopping-basket">
-		</button>
-		<button class="btn btn-icon" id="hamburger-toggler">
-			<img src="{% static 'imgs/menu_black.svg' %}" alt="menu">
-		</button>
-	</div>
-</nav>
-<div class="collapse-menu" id="basket-menu">
-	<h1 class="ml-16">Cart</h1>
-	<div class="total-section">
-		<strong>PRODUCT NAME</strong>
-		<span>PRICE</span>
-	</div>
-	<div class="dot-divider"></div>
-	<div class="total-section">
-		<strong><a href="#" class="unstyled-link">Condom A</a> x 1</strong>
-		<span> $0.99 </span>
-	</div>
-	<div class="dot-divider"></div>
-	<div class="total-section">
-		<strong>SUBTOTAL: </strong>
-		<span>$0.00</span>
-	</div>
-	<a href="{% url 'main:cart' %}" class="btn btn-default ml-16">CHECKOUT</a>
-</div>
-<div class="collapse-menu" id="hamburger-menu">
-	<ul class="collapse-ul">
-		<li class="collapse-li">
-			<a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Guys</strong></a>
-		</li>
-		<li class="collapse-li">
-			<a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Girls</strong></a>
-		</li>
-		<li class="collapse-li">
-			<a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Editorial</strong></a>
-		</li>
-		<li class="collapse-li">
-			<a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Search</strong></a>
-		</li>
-		<li class="collapse-li">
-			<a href="{% url 'main:login' %}" class="unstyled-link"><strong>Sign In / Register</strong></a>
-		</li>
-		<li class="collapse-li">
-			<a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Contact Us</strong></a>
-		</li>
-		<li class="collapse-li">
-			<a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Visit Us</strong></a>
-		</li>
-	</ul>
-</div>
+{% include 'navbar.html' %}
 {% block body %}
 {% endblock %}
-<footer class="footer mt-16">
-	<div class="flex-row">
-		<button class="btn-white full-width">FREE WORLDWIDE SHIPPING</button>
-	</div>
-	<div class="flex-row space-around mt-16 wrap">
-		<div class="flex-col text-l">
-			<strong>Our flagship stores</strong>
-			<small>London & Sheffield</small>
-		</div>
-		<div class="flex-col text-l">
-			<strong>HELP</strong>
-			<small>Delivery</small>
-			<small>Order & Returns</small>
-			<small>Other FAQ</small>
-			<small>Contact us</small>
-		</div>
-		<div class="flex-col text-l">
-			<strong>AIRY SOCIAL</strong>
-			<small>Twitter</small>
-			<small>Facebook</small>
-			<small>Instragram</small>
-			<small>Shop Insta</small>
-		</div>
-		<div class="flex-col text-l">
-			<strong>JOIN US</strong>
-			<label for="join-us-email">Enter your email to receiver updates and offers</label>
-			<input type="email" name="join-us-email" id="join-us-email">
-		</div>
-	</div>
-	<div class="flex-row space-around mt-16">
-		<span class="text-muted">@ 2017 AIRY</span>
-		<span>Term & Condition</span>
-		<span>Privacy Policy</span>
-	</div>
-</footer>
+{% include 'footer.html' %}
 <script src="{% static 'js/navbar.js' %}"></script>
 </body>
 </html>
