@@ -79,6 +79,7 @@ def registerView(request):
         return redirect('/catalogue')
     else:
         form = SignUpForm()
+        
     return render(request, 'main/register.html', {'form': form})
 
 
