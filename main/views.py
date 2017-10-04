@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate, views
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .forms import SignUpForm
 from .models import Product
@@ -12,10 +12,6 @@ def indexView(request):
     return render(request, 'main/index.html')
 
 
-def catalogueView(request):
-    return render(request, 'main/catalogue.html')
-
-
 class CatalogueView(ListView):
     template_name = 'main/catalogue.html'
     model = Product
@@ -23,6 +19,10 @@ class CatalogueView(ListView):
 def detailView(request):
     return render(request, 'main/product-detail.html')
 
+
+class ProductDetailView(DetailView):
+    template_name = 'main/product-detail.html'
+    model = Product
 
 class LoginView(views.LoginView):
     template_name = 'main/login.html'

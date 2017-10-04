@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class UserInfo(models.Model):
@@ -13,6 +14,9 @@ class Product(models.Model):
     price = models.FloatField()
     amount = models.IntegerField()
     pic = models.ImageField(upload_to="imgs/", default="static/imgs/product_thumbnail.jpg")
+
+    def get_absolute_url(self):
+        return reverse('main:product_detail', self.pk)
 
     def __str__(self):
         return self.name

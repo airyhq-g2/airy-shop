@@ -11,7 +11,7 @@ app_name = 'main'
 urlpatterns = [
     url('^$', views.indexView, name='index'),
     url('^catalogue/$', views.CatalogueView.as_view(), name='catalogue'),
-    url('^products/$', views.detailView, name='product_detail'),
+    url('^product/(?P<pk>\d+)/$', views.ProductDetailView.as_view(), name='product_detail'),
     url('^login/$', views.LoginView.as_view(), name='login'),
     url('^logout/$', auth_views.LogoutView.as_view(next_page=reverse_lazy('main:catalogue')), name='logout'),
     url('^register/$', views.registerView, name='register'),

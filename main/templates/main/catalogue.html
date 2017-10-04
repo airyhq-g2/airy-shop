@@ -11,10 +11,11 @@
         {% for product in object_list %}
             <div class="product-item">
 			<div class="product-overlay">
-				<a href="{% url 'main:product_detail' %}" class="product-overlay-text flex-col unstyled-link">
+                <a href="{% url 'main:product_detail' product.pk %}"
+                   class="product-overlay-text flex-col unstyled-link">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price }}$</p>
-					<a href="{% url 'main:product_detail' %}" class="btn btn-icon">
+                    <a href="" class="btn btn-icon">
 						<img src="{% static 'imgs/eye_black.svg' %}" alt="view-garment">
 						<span class="btn-icon-span">View Garment</span>
 					</a>
