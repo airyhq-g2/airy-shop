@@ -1,32 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-	<link rel="stylesheet" href="{% static 'css/loginform.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loginform.css' %}">
 {% endblock %}
 {% block title %}
-	Account - AIRY
+    Account - AIRY
 {% endblock %}
 {% block body %}
-	<div class="container">
-		<form method="post" class="login-form">
-			<h2 class="login-form-title">Sign In</h2>
-			<div class="dot-divider"></div>
-			<div class="form-group">
-				<label for="">Email Address</label>
-				<input class="login-form-input" type="email" placeholder="example@example.com" required>
-			</div>
-			<div class="form-group">
-				<label for="">Password</label>
-				<input class="login-form-input" type="password" placeholder="Password" required>
-			</div>
-			<div class="dot-divider"></div>
-			<div class="sign-in-section">
-				<input class="btn btn-default" type="submit" value="Sign In">
-				<p>or <a class="unstyled-link" href="{% url 'main:register' %}"><strong>Create Account</strong></a></p>
-			</div>
-			<p><a class="unstyled-link" href="#">Forgot your password?</a></p>
-		</form>
-	</div>
+    <div class="container">
+        <form action="" method="post" class="login-form">
+            {% csrf_token %}
+            <h2 class="login-form-title">Sign In</h2>
+            <div class="dot-divider"></div>
+            {{ form }}
+            <div class="dot-divider"></div>
+            <div class="sign-in-section">
+                <input class="btn btn-default" type="submit" value="Sign In">
+                <p>or <a class="unstyled-link" href="{% url 'main:register' %}"><strong>Create Account</strong></a></p>
+            </div>
+            <p><a class="unstyled-link" href="#">Forgot your password?</a></p>
+        </form>
+    </div>
 {% endblock %}
-</body>
-</html>
