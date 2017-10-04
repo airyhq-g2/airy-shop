@@ -53,17 +53,17 @@
         <li class="collapse-li">
             <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Search</strong></a>
         </li>
-        {% if not request.user.is_authenticated %}
-            <li class="collapse-li">
-                <a href="{% url 'main:login' %}" class="unstyled-link"><strong>Sign In / Register</strong></a>
-            </li>
-        {% endif %}
         <li class="collapse-li">
             <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Contact Us</strong></a>
         </li>
         <li class="collapse-li">
             <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Visit Us</strong></a>
         </li>
+        {% if not request.user.is_authenticated %}
+            <li class="collapse-li">
+                <a href="{% url 'main:login' %}" class="unstyled-link"><strong>Sign In / Register</strong></a>
+            </li>
+        {% endif %}
         {% if request.user.is_authenticated %}
             <li class="collapse-li">
                 <a href="{% url 'main:logout' %}" class="unstyled-link">
