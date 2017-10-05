@@ -239,7 +239,7 @@ body {
 
 .product-item > img {
   width: 100%;
-  height: auto;
+  height: 331.656px;
 }
 
 .bg-light-brown {
@@ -364,6 +364,7 @@ input {
 
 @media screen and (min-width: 1024px) {
   .product-item {
+    margin: 20px 20px;
     min-width: 240px;
     max-width: 400px;
     height: auto;
