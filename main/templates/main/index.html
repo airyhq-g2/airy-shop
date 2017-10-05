@@ -1,122 +1,125 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-	<link rel="stylesheet" href="{% static 'css/common.css' %}">
-  <link rel="stylesheet" href="{% static 'css/index.css' %}">
-  <title>Airy Co.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Airy Co.</title>
 </head>
+
 <body>
-  <nav class="nav">
-    <div class="brand">
-      <a href="{% url 'main:index' %}" class="unstyled-link">
-        <img src="{% static 'imgs/brand_logo.svg' %}" alt="brand-logo" class="brand-logo">
-      </a>
-    </div>
-    <div class="action">
-      <button class="btn btn-icon" id="basket-toggler">
+    <nav class="nav">
+        <div class="brand">
+            <a href="{% url 'main:index' %}" class="unstyled-link">
+                <img src="{% static 'imgs/brand_logo.svg' %}" alt="brand-logo" class="brand-logo">
+            </a>
+        </div>
+        <div class="action">
+            <button class="btn btn-icon" id="basket-toggler">
         <img src="{% static 'imgs/shopping_basket_white.svg' %}" alt="shopping-basket">
       </button>
-      <button class="btn btn-icon" id="hamburger-toggler">
+            <button class="btn btn-icon" id="hamburger-toggler">
         <img src="{% static 'imgs/menu_white.svg' %}" alt="menu">
       </button>
-    </div>
-  </nav>
-  <div class="collapse-menu" id="basket-menu">
-    <h1 class="ml-16">Cart</h1>
-    <div class="total-section">
-      <strong>PRODUCT NAME</strong>
-      <span>PRICE</span>
-    </div>
-    <div class="dot-divider"></div>
-    <div class="total-section">
-      <strong><a href="#" class="unstyled-link">Condom A</a> x 1</strong>
-      <span> $0.99 </span>
-    </div>
-    <div class="dot-divider"></div>
-    <div class="total-section">
-      <strong>SUBTOTAL: </strong>
-      <span>$0.00</span>
-    </div>
-    <button class="btn btn-default ml-16">CHECKOUT</button>
-  </div>
-  <div class="collapse-menu" id="hamburger-menu">
-    <ul class="collapse-ul">
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Guys</strong></a>
-      </li>
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Girls</strong></a>
-      </li>
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Accessories</strong></a>
-      </li>
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Unisex</strong></a>
-      </li>
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Editorial</strong></a>
-      </li>
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Search</strong></a>
-      </li>
-      <li class="collapse-li">
-        <a href="{% url 'main:catalogue' %}"  class="unstyled-link"><strong>Our Stores</strong></a>
-      </li>
-    </ul>
-  </div>
-  <div class="container">
-    <nav class="sidebar">
-	    <a href="{% url 'main:index' %}" class="unstyled-link">
-        <img src="{% static 'imgs/brand_logo.svg' %}" alt="brand-logo" class="brand-logo">
-	    </a>
-      <ul class="sidebar-ul">
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Guys</a>
-        </li>
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Girls</a>
-        </li>
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Accessories</a>
-        </li>
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Unisex</a>
-        </li>
-      </ul>
-      <ul class="sidebar-ul">
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Editorials</a>
-        </li>
-      </ul>
-      <ul class="sidebar-ul">
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Search</a>
-        </li>
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Our Stores</a>
-        </li>
-        <li class="mb-8">
-          <a href="{% url 'main:login' %}"  class="unstyled-link-white transition-5">My Account</a>
-        </li>
-        <li class="mb-8">
-          <a href="{% url 'main:catalogue' %}"  class="unstyled-link-white transition-5">Get Help</a>
-        </li>
-      </ul>
+        </div>
     </nav>
-    <div class="promotion">
-      <h1 class="promotion-title">
-        <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">SALE</a>
-      </h1>
-      <p class="promotion-subtitle">
-        <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">SHOP</a>
-      </p>
+    <div class="collapse-menu" id="basket-menu">
+        <h1 class="ml-16">Cart</h1>
+        <div class="total-section">
+            <strong>PRODUCT NAME</strong>
+            <span>PRICE</span>
+        </div>
+        <div class="dot-divider"></div>
+        <div class="total-section">
+            <strong><a href="#" class="unstyled-link">Condom A</a> x 1</strong>
+            <span> $0.99 </span>
+        </div>
+        <div class="dot-divider"></div>
+        <div class="total-section">
+            <strong>SUBTOTAL: </strong>
+            <span>$0.00</span>
+        </div>
+        <button class="btn btn-default ml-16">CHECKOUT</button>
     </div>
-  </div>
-  <script src="{% static 'js/navbar.js' %}"></script>
+    <div class="collapse-menu" id="hamburger-menu">
+        <ul class="collapse-ul">
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Guys</strong></a>
+            </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Girls</strong></a>
+            </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Accessories</strong></a>
+            </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Unisex</strong></a>
+            </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Editorial</strong></a>
+            </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Search</strong></a>
+            </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Our Stores</strong></a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <nav class="sidebar">
+            <a href="{% url 'main:index' %}" class="unstyled-link">
+                <img src="{% static 'imgs/brand_logo.svg' %}" alt="brand-logo" class="brand-logo">
+            </a>
+            <ul class="sidebar-ul">
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Guys</a>
+                </li>
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Girls</a>
+                </li>
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Accessories</a>
+                </li>
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Unisex</a>
+                </li>
+            </ul>
+            <ul class="sidebar-ul">
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Editorials</a>
+                </li>
+            </ul>
+            <ul class="sidebar-ul">
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Search</a>
+                </li>
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Our Stores</a>
+                </li>
+                <li class="mb-8">
+                    <a href="{% url 'main:login' %}" class="unstyled-link-white transition-5">My Account</a>
+                </li>
+                <li class="mb-8">
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Get Help</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="promotion">
+            <h1 class="promotion-title">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">SALE</a>
+            </h1>
+            <p class="promotion-subtitle">
+                <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">SHOP</a>
+            </p>
+        </div>
+    </div>
+    <script src="{% static 'js/navbar.js' %}"></script>
 </body>
+
 </html>
