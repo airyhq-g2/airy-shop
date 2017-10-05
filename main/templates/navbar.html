@@ -2,7 +2,7 @@
 <nav class="nav">
     <div class="brand">
         <a href="{% url 'main:index' %}">
-            <img src="{% static 'imgs/brand_logo_inverse.png' %}" alt="brand-logo" class="brand-logo">
+            <img src="{% static 'imgs/brand_logo_inverse.svg' %}" alt="brand-logo" class="brand-logo">
         </a>
     </div>
     <div class="action">
@@ -65,11 +65,11 @@
             </li>
         {% endif %}
         {% if request.user.is_authenticated %}
-            <li class="collapse-li">
-                <a href="{% url 'main:logout' %}" class="unstyled-link">
-                    <strong>Sign out</strong>
-                </a>
-            </li>
+        <li class="collapse-li">
+            <a href="{% url 'main:logout' %}" class="unstyled-link">
+                <strong>Sign out</strong>
+            </a>
+        </li>
         {% endif %}
     </ul>
 </div>
