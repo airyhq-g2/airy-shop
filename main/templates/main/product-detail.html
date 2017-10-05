@@ -22,8 +22,9 @@
 			</div>
 			<div class="add-tablet ma-8">
 				<div class="dot-divider"></div>
-				<form method="post" class="form-flex-col">
-					<label for="select-size">Select Size:</label>
+                <form action="{% url 'main:add_to_cart' object.pk %}" method="post" class="form-flex-col">
+                    {% csrf_token %}
+                    <label for="select-size">Select Size:</label>
 					<select name="select-size" id="select-size">
 						<option value="xs">X-small</option>
 						<option value="s">Small</option>
@@ -31,6 +32,8 @@
 						<option value="l">Large</option>
 						<option value="xl">X-Large</option>
 					</select>
+                    <label for="amount">Quantity:</label>
+                    <input name="amount" id="amount" type="number" value="0">
 					<div class="ma-16"></div>
 					<input class="btn btn-brown" type="submit" value="ADD TO CART">
 				</form>

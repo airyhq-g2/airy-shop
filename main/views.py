@@ -1,10 +1,13 @@
 from django.contrib.auth import login, authenticate, views
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 
-from .forms import SignUpForm
-from .models import Product
+from .forms import SignUpForm, OrderForm
+from .models import Product, Order
 
 
 # Create your views here.
@@ -15,14 +18,48 @@ def indexView(request):
 class CatalogueView(ListView):
     template_name = 'main/catalogue.html'
     model = Product
+    additional_context = {}
 
-def detailView(request):
-    return render(request, 'main/product-detail.html')
+    def get_context_data(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            total_price = 0
+            orders = Order.objects.filter(user=self.request.user)
+
+            for order in orders:
+                total_price += order.get_total_price()
+
+            self.additional_context = {
+                'cart': orders,
+                'total_price': total_price
+            }
+        context = super(CatalogueView, self).get_context_data(**kwargs)
+        context.update(self.additional_context)
+        return context
+
 
 
 class ProductDetailView(DetailView):
     template_name = 'main/product-detail.html'
     model = Product
+
+    additional_context = {}
+
+    def get_context_data(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            total_price = 0
+            orders = Order.objects.filter(user=self.request.user)
+
+            for order in orders:
+                total_price += order.get_total_price()
+
+            self.additional_context = {
+                'cart': orders,
+                'total_price': total_price
+            }
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context.update(self.additional_context)
+        return context
+
 
 class LoginView(views.LoginView):
     template_name = 'main/login.html'
@@ -45,5 +82,48 @@ def registerView(request):
     return render(request, 'main/register.html', {'form': form})
 
 
-def cartView(request):
-    return render(request, 'main/cart.html')
+class CartView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('main:login')
+    template_name = 'main/cart.html'
+    model = Order
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super(CartView, self).get_context_data(**kwargs)
+        total_price = 0
+        orders = Order.objects.filter(user=self.request.user)
+
+        for order in orders:
+            total_price += order.get_total_price()
+
+        context.update({
+            'cart': orders,
+            'total_price': total_price
+        })
+        return context
+
+
+@login_required
+def addToCart(request, pk):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            amount = form.cleaned_data.get('amount')
+            order = Order.objects.create(
+                user=request.user,
+                product=Product.objects.get(pk=pk),
+                amount=amount,
+                status=0
+            )
+            order.save()
+            return HttpResponseRedirect(reverse_lazy('main:catalogue'))
+
+
+@login_required
+def removeFromCart(request, pk):
+    if request.method == 'POST':
+        order = Order.objects.get(pk=pk)
+        order.delete()
+        return HttpResponseRedirect(reverse_lazy('main:cart'))
