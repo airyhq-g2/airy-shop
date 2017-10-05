@@ -27,6 +27,5 @@ class Order(models.Model):
     amount = models.IntegerField()
     date = models.DateTimeField(auto_now=True)
     status = models.IntegerField()
-
-    def get_total_price(self):
+    def get_total_price(self):      
         return self.product.price * self.amount
