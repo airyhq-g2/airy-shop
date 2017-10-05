@@ -17,21 +17,27 @@
 <div class="collapse-menu" id="basket-menu">
     <p>Hello, <strong>{{ request.user }}</strong></p>
     <h1 class="ml-16">Cart</h1>
-    <div class="total-section">
-        <strong>PRODUCT NAME</strong>
-        <span>PRICE</span>
-    </div>
-    <div class="dot-divider"></div>
-    <div class="total-section">
-        <strong><a href="#" class="unstyled-link">Condom A</a> x 1</strong>
-        <span> $0.99 </span>
-    </div>
-    <div class="dot-divider"></div>
-    <div class="total-section">
-        <strong>SUBTOTAL: </strong>
-        <span>$0.00</span>
-    </div>
-    <a href="{% url 'main:cart' %}" class="btn btn-default ml-16">CHECKOUT</a>
+    {% if cart %}
+        <div class="total-section">
+            <strong>PRODUCT NAME</strong>
+            <span>PRICE</span>
+        </div>
+        <div class="dot-divider"></div>
+        {% for order in cart %}
+            <div class="total-section">
+                <strong><a href="#" class="unstyled-link">{{ order.product.name }}</a> x {{ order.amount }}</strong>
+                <span> {{ order.get_total_price }} </span>
+            </div>
+        {% endfor %}
+        <div class="dot-divider"></div>
+        <div class="total-section">
+            <strong>SUBTOTAL: </strong>
+            <span>{{ total_price }}</span>
+        </div>
+        <a href="{% url 'main:cart' %}" class="btn btn-default ml-16">CHECKOUT</a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
 </div>
 <div class="collapse-menu" id="hamburger-menu">
     <ul class="collapse-ul">
@@ -47,17 +53,17 @@
         <li class="collapse-li">
             <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Search</strong></a>
         </li>
-        {% if not request.user.is_authenticated %}
-        <li class="collapse-li">
-            <a href="{% url 'main:login' %}" class="unstyled-link"><strong>Sign In / Register</strong></a>
-        </li>
-        {% endif %}
         <li class="collapse-li">
             <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Contact Us</strong></a>
         </li>
         <li class="collapse-li">
             <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Visit Us</strong></a>
         </li>
+        {% if not request.user.is_authenticated %}
+            <li class="collapse-li">
+                <a href="{% url 'main:login' %}" class="unstyled-link"><strong>Sign In / Register</strong></a>
+            </li>
+        {% endif %}
         {% if request.user.is_authenticated %}
         <li class="collapse-li">
             <a href="{% url 'main:logout' %}" class="unstyled-link">

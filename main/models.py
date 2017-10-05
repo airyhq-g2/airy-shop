@@ -13,7 +13,7 @@ class Product(models.Model):
     desc = models.TextField(max_length=1000)
     price = models.FloatField()
     amount = models.IntegerField()
-    pic = models.ImageField(upload_to="imgs/", default="static/imgs/product_thumbnail.jpg")
+    pic = models.ImageField(upload_to="imgs/", default="../static/imgs/empty.png")
 
     def get_absolute_url(self):
         return reverse('main:product_detail', self.pk)
@@ -27,3 +27,5 @@ class Order(models.Model):
     amount = models.IntegerField()
     date = models.DateTimeField(auto_now=True)
     status = models.IntegerField()
+    def get_total_price(self):      
+        return self.product.price * self.amount
