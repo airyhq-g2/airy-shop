@@ -15,7 +15,14 @@
     </div>
 </nav>
 <div class="collapse-menu" id="basket-menu">
-    <p>Hello, <strong>{{ request.user }}</strong></p>
+    <p>Hello, <strong>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'main:cart' %}" class="unstyled-link">{{ request.user }}</a>
+        {% else %}
+            <a href="{% url 'main:login' %}" class="unstyled-link">Guest</a>
+        {% endif %}
+    </strong>
+    </p>
     <h1 class="ml-16">Cart</h1>
     {% if cart %}
         <div class="total-section">
@@ -25,7 +32,11 @@
         <div class="dot-divider"></div>
         {% for order in cart %}
             <div class="total-section">
-                <strong><a href="#" class="unstyled-link">{{ order.product.name }}</a> x {{ order.amount }}</strong>
+                <strong>
+                    <a href="{% url 'main:product_detail' order.product.pk %}" class="unstyled-link">
+                        {{ order.product.name }} x {{ order.amount }}
+                    </a>
+                </strong>
                 <span> {{ order.get_total_price }} </span>
             </div>
         {% endfor %}

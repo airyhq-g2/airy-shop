@@ -15,12 +15,24 @@
                 <div class="flex-col">
                     <img src="{{ object.product.pic.url }}" alt="product-img" width="160" height="160">
                 </div>
-                <form action="{% url 'main:remove_from_cart' object.pk %}" method="post" class="flex-col">
+                <form action="{% url 'main:remove_from_cart' %}" method="post" class="flex-col">
                     {% csrf_token %}
-                    <strong class="ml-16"><a href="#" class="unstyled-link">{{ object.product.name }}</a></strong>
+                    <strong class="ml-16">
+                        <a href="{% url 'main:product_detail' object.product.pk %}" class="unstyled-link">
+                            {{ object.product.name }}
+                        </a>
+                    </strong>
+                    <input type="hidden"
+                           name="product"
+                           id="product"
+                           value="{{ object.pk }}"/>
                     <div class="flex-row ml-16 align-items-center">
-                        <input type="number" name="product-quantity" id="product-quantity" value="{{ object.amount }}"
-                               class="input-sm">
+                        <input type="number"
+                               name="amount"
+                               id="amount"
+                               value="{{ object.amount }}"
+                               min="1"
+                               class="input-sm"/>
                     </div>
                     <span class="ml-16 mt-16">
                         <strong>Price: </strong>

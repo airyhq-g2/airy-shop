@@ -16,8 +16,8 @@ urlpatterns = [
     url('^logout/$', auth_views.LogoutView.as_view(next_page=reverse_lazy('main:catalogue')), name='logout'),
     url('^register/$', views.registerView, name='register'),
     url('^cart/$', views.CartView.as_view(), name='cart'),
-    url('^add-to-cart/(?P<pk>\d+)/$', views.addToCart, name='add_to_cart'),
-    url('^remove-from-cart/(?P<pk>\d+)/$', views.removeFromCart, name='remove_from_cart')
+    url('^add-product/$', views.addToCart, name='add_to_cart'),
+    url('^remove-product/$', views.removeFromCart, name='remove_from_cart')
 ]
 
 if settings.DEBUG:
