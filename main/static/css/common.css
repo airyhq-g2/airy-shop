@@ -56,7 +56,8 @@ body {
 }
 
 .footer {
-    position: relative;
+    position: absolute;
+    width: 100%;
     background: white;
     text-align: center;
     color: black;
@@ -95,7 +96,7 @@ body {
     max-height: 0;
     background: white;
     color: black;
-    position: absolute;
+    position: fixed;
     top: 61px;
     right: 0;
     width: 100%;
@@ -187,7 +188,8 @@ body {
 }
 
 .btn-white:hover {
-    background: grey;
+    background: black;
+    color: white;
     transition: .5s ease;
 }
 
