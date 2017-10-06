@@ -1,6 +1,12 @@
-# WSP-AIRY
+# AIRY Shop
 
-# How to import data from csv
+How to run
+```bash
+    docker-compose up
 ```
-docker-compose run web python ./scripts/import_products.py
+
+* How to import data from csv
+
+```bash
+    docker-compose run web python ./scripts/import_products.py
 ```
