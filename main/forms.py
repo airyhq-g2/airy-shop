@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class OrderForm(forms.Form):
     amount = forms.IntegerField()
+    product = forms.IntegerField()
 
 class SignUpForm(UserCreationForm):
     class Meta:

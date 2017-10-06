@@ -14,7 +14,6 @@ from .models import Product, Order
 def indexView(request):
     return render(request, 'main/index.html')
 
-
 class CatalogueView(ListView):
     template_name = 'main/catalogue.html'
     model = Product
@@ -107,11 +106,12 @@ class CartView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def addToCart(request, pk):
+def addToCart(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
+            pk = form.cleaned_data.get('product')
             order = Order.objects.create(
                 user=request.user,
                 product=Product.objects.get(pk=pk),
@@ -123,8 +123,11 @@ def addToCart(request, pk):
 
 
 @login_required
-def removeFromCart(request, pk):
+def removeFromCart(request):
     if request.method == 'POST':
-        order = Order.objects.get(pk=pk)
-        order.delete()
-        return HttpResponseRedirect(reverse_lazy('main:cart'))
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            pk = form.cleaned_data.get('product')
+            order = Order.objects.get(pk=pk)
+            order.delete()
+            return HttpResponseRedirect(reverse_lazy('main:cart'))

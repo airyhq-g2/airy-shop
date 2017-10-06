@@ -56,7 +56,8 @@ body {
 }
 
 .footer {
-    position: relative;
+    position: absolute;
+    width: 100%;
     background: white;
     text-align: center;
     color: black;
@@ -95,7 +96,7 @@ body {
     max-height: 0;
     background: white;
     color: black;
-    position: absolute;
+    position: fixed;
     top: 61px;
     right: 0;
     width: 100%;
@@ -187,7 +188,8 @@ body {
 }
 
 .btn-white:hover {
-    background: grey;
+    background: black;
+    color: white;
     transition: .5s ease;
 }
 
@@ -241,7 +243,7 @@ body {
     position: relative;
 }
 
-.product-item>img {
+.product-item > img {
     width: 100%;
     height: 331.656px;
 }
@@ -367,6 +369,7 @@ input {
 }
 
 @media screen and (min-width: 1024px) {
+
     .product-item {
         margin: 20px 20px;
         min-width: 240px;
