@@ -243,9 +243,9 @@ body {
     position: relative;
 }
 
-.product-item > img {
+.product-item>img {
     width: 100%;
-    height: 331.656px;
+    height: auto;
 }
 
 .bg-light-brown {
@@ -369,11 +369,10 @@ input {
 }
 
 @media screen and (min-width: 1024px) {
-
     .product-item {
         margin: 20px 20px;
         min-width: 240px;
-        max-width: 400px;
+        max-width: 300px;
         height: auto;
     }
     .collapse-menu {
