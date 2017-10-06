@@ -1,11 +1,11 @@
 @font-face {
-    font-family: 'Quicksand';
+    font-family: 'SugarstyleMillenial-Regular';
     src: url(../fonts/test2.ttf);
 }
 
 body {
     padding-top: 80px;
-    font-family: Quicksand, sans-serif;
+    font-family: SugarstyleMillenial-Regular, sans-serif;
     color: black;
     background: white;
     padding-bottom: 100px;
@@ -376,7 +376,6 @@ input {
         max-width: 400px;
         height: auto;
     }
-
     .collapse-menu {
         width: 25%;
     }
