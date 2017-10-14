@@ -76,7 +76,12 @@ WSGI_APPLICATION = 'wsp_airy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3'
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'ec2-54-163-227-202.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USER': 'qidwznjrsgzzkp',
+        'PASSWORD': 'ea18ba357f7c37fbf65c8e0e1864e2925681148f7c1afeba344766caccf35e2e',
+        'DATABASE': 'db926rps9nd7m5'
     }
 }
 
