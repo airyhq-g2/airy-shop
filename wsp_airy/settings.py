@@ -76,12 +76,7 @@ WSGI_APPLICATION = 'wsp_airy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
-        'PASSWORD': 1112
+        'ENGINE': 'django.db.backends.sqlite3'
     }
 }
 
