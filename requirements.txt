@@ -1,3 +1,5 @@
 Django==1.11.4
 psycopg2
 pillow
+dj-database-url
+gunicorn
