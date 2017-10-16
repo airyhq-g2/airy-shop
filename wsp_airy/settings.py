@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://airyhq-shop.herokuapp.com/']
+ALLOWED_HOSTS = ['airyhq-shop.herokuapp.com']
 
 
 # Application definition
