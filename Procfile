@@ -1,1 +1,1 @@
-web: gunicorn airy_shop.wsgi
+web: gunicorn wsp_airy.wsgi
