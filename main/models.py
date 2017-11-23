@@ -51,7 +51,7 @@ class Order(models.Model):
     def get_total_price(self):
         return self.product.price * self.amount
 
-class Manager(models.Transaction):
+class Manager(Transaction):
     class Meta:
         proxy = True
         verbose_name = 'transaction'
