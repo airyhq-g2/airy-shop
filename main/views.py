@@ -79,8 +79,6 @@ class LoginView(views.LoginView):
     redirect_field_name = reverse_lazy('main:catalogue')
 
 
-
-
 def registerView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
