@@ -2,11 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
-class Manager(models.Transaction):
-    class Meta:
-        proxy = True
-        verbose_name = 'transaction'
-        verbose_name_plural = 'transaction'
+
 class UserInfo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField()
@@ -54,3 +50,9 @@ class Order(models.Model):
 
     def get_total_price(self):
         return self.product.price * self.amount
+
+class Manager(Transaction):
+    class Meta:
+        proxy = True
+        verbose_name = 'transaction'
+        verbose_name_plural = 'transaction'
