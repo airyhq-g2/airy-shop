@@ -66,6 +66,8 @@ class LoginView(views.LoginView):
     redirect_field_name = reverse_lazy('main:catalogue')
 
 
+
+
 def registerView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -75,7 +77,7 @@ def registerView(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-        return redirect('/catalogue')
+            return redirect('/catalogue')
     else:
         form = SignUpForm()
         
