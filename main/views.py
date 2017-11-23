@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-from django.Model import DoesNotExist
+from django.db.models.Model import DoesNotExist
 from .forms import SignUpForm, OrderForm
 from .models import Product, Order , Transaction
 
