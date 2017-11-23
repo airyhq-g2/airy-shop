@@ -65,6 +65,8 @@ class LoginView(views.LoginView):
     redirect_field_name = reverse_lazy('main:catalogue')
 
 
+
+
 def registerView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -107,7 +109,7 @@ class CartView(LoginRequiredMixin, ListView):
 
 
 def addToCart(request):
-    if request.user == 'AnonymousUser':
+    if not request.user.is_authenticated():
         return HttpResponseRedirect(reverse_lazy('main:login'))
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -115,19 +117,12 @@ def addToCart(request):
             amount = form.cleaned_data.get('amount')
             pk = form.cleaned_data.get('product')
             try:
-                trans = Transaction.objects.get(user=request.user)
-                if(trans.status == "active"):
-                    trans = Transaction.objects.create(
-                        user = request.user,
-                        shipping = "KERRY",
-                        status = "active"
-                    )
-                    trans.save()
+                trans = Transaction.objects.get(user=request.user, status="inactive")
                 order = Order.objects.create(
                         user=request.user,
                         product=Product.objects.get(pk=pk),
                         amount=amount,
-                        transaction=trans.pk
+                        transaction=trans
                 )
                 order.save()
             except ObjectDoesNotExist as error:
@@ -141,7 +136,7 @@ def addToCart(request):
                         user=request.user,
                         product=Product.objects.get(pk=pk),
                         amount=amount,
-                        transaction=trans.pk
+                        transaction=trans
                 )
                 order.save()
             return HttpResponseRedirect(reverse_lazy('main:catalogue'))
