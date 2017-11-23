@@ -36,9 +36,8 @@ class CatalogueView(ListView):
         context.update(self.additional_context)
         return context
 
-
     def get_queryset(self):
-        result = super(CatalogueView, self),get_queryset()
+        result = super(CatalogueView, self).get_queryset()
 
         query = self.request.GET.get('q')
         if query:
