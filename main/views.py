@@ -38,7 +38,7 @@ class CatalogueView(ListView):
 
 
     def get_queryset(self):
-        result = super(StoreSearchListView, self),get_queryset()
+        result = super(CatalogueView, self),get_queryset()
 
         query = self.request.GET.get('q')
         if query:
