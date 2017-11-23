@@ -54,5 +54,5 @@ class Order(models.Model):
 class Manager(Transaction):
     class Meta:
         proxy = True
-        verbose_name = 'transaction'
-        verbose_name_plural = 'transaction'
+        verbose_name = 'Manager'
+        verbose_name_plural = 'Manager'
