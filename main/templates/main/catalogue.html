@@ -8,10 +8,10 @@
 {% endblock %}
 {% block body %}
 	<div class="product-table">
-        <form action="{% url main:catalogue %}" method="GET">
-            <input name="q" type="text">
-            <input type="submit" value="search">
-        </form>
+		<form action="{% url 'main:catalogue' %}" method="GET">
+			<input type="text" name="q">
+			<input type="submit" value="search">
+		</form>
         {% for product in object_list %}
             <div class="product-item">
 			<div class="product-overlay">

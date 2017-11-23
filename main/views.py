@@ -1,3 +1,5 @@
+import operator
+from django.db.models import Q
 from django.contrib.auth import login, authenticate, views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,7 +10,6 @@ from django.views.generic import ListView, DetailView
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import SignUpForm, OrderForm
 from .models import Product, Order , Transaction
-
 
 # Create your views here.
 def indexView(request):
@@ -36,7 +37,19 @@ class CatalogueView(ListView):
         context.update(self.additional_context)
         return context
 
+    def get_queryset(self):
+        result = super(CatalogueView, self).get_queryset()
 
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                        (Q(name_icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                        (Q(brand_icontains=q) for q in query_list))
+            )
+        return result
 
 class ProductDetailView(DetailView):
     template_name = 'main/product-detail.html'
@@ -65,7 +78,7 @@ class LoginView(views.LoginView):
     template_name = 'main/login.html'
     redirect_authenticated_user = True
     redirect_field_name = reverse_lazy('main:catalogue')
-
+    
 def registerView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -78,7 +91,7 @@ def registerView(request):
             return redirect('/catalogue')
     else:
         form = SignUpForm()
-        
+
     return render(request, 'main/register.html', {'form': form})
 
 
@@ -103,6 +116,8 @@ class CartView(LoginRequiredMixin, ListView):
             'total_price': total_price
         })
         return context
+
+
 
 
 def addToCart(request):
@@ -148,4 +163,3 @@ def removeFromCart(request):
             order = Order.objects.get(pk=pk)
             order.delete()
             return HttpResponseRedirect(reverse_lazy('main:cart'))
-
