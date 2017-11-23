@@ -20,6 +20,7 @@ class CatalogueView(ListView):
     model = Product
     additional_context = {}
 
+
     def get_context_data(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             total_price = 0
@@ -77,8 +78,7 @@ class LoginView(views.LoginView):
     template_name = 'main/login.html'
     redirect_authenticated_user = True
     redirect_field_name = reverse_lazy('main:catalogue')
-
-
+    
 def registerView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
