@@ -25,7 +25,7 @@ SECRET_KEY = '3q=9@@*#jo+tl)*#4^mb-(f8&^q-@226(mh_t^7k_o81$tl(pu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['airyhq-shop.herokuapp.com']
+ALLOWED_HOSTS = ['airyhq-shop.herokuapp.com','127.0.0.1']
 
 
 # Application definition

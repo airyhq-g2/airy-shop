@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-from django.db.models import Model
+from django.core.exceptions import ObjectDoesNotExist
 from .forms import SignUpForm, OrderForm
 from .models import Product, Order , Transaction
 
@@ -105,8 +105,9 @@ class CartView(LoginRequiredMixin, ListView):
         return context
 
 
-@login_required
 def addToCart(request):
+    if request.user == 'AnonymousUser':
+        return HttpResponseRedirect(reverse_lazy('main:login'))
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -128,7 +129,7 @@ def addToCart(request):
                         transaction=trans.pk
                 )
                 order.save()
-            except Model.DoesNotExist as error:
+            except ObjectDoesNotExist as error:
                 trans = Transaction.objects.create(
                     user = request.user,
                     shipping = "KERRY",
