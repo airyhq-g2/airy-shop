@@ -106,7 +106,7 @@ class CartView(LoginRequiredMixin, ListView):
 
 
 def addToCart(request):
-    if request.user == 'AnonymousUser':
+    if not request.user.is_authenticated():
         return HttpResponseRedirect(reverse_lazy('main:login'))
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -126,7 +126,7 @@ def addToCart(request):
                         user=request.user,
                         product=Product.objects.get(pk=pk),
                         amount=amount,
-                        transaction=trans.pk
+                        transaction=trans
                 )
                 order.save()
             except ObjectDoesNotExist as error:
@@ -140,7 +140,7 @@ def addToCart(request):
                         user=request.user,
                         product=Product.objects.get(pk=pk),
                         amount=amount,
-                        transaction=trans.pk
+                        transaction=trans
                 )
                 order.save()
             return HttpResponseRedirect(reverse_lazy('main:catalogue'))
