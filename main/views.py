@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
+from django.Model import DoesNotExist
 from .forms import SignUpForm, OrderForm
 from .models import Product, Order , Transaction
 
@@ -110,28 +111,37 @@ def addToCart(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
-            pk = form.cleaned_data.get('product') 
-            trans = Transaction.objects.get(user=request.user)
-            if(trans.status == "inactive"):
+            pk = form.cleaned_data.get('product')
+            try:
+                trans = Transaction.objects.get(user=request.user)
+                if(trans.status == "active"):
+                    trans = Transaction.objects.create(
+                        user = request.user,
+                        shipping = "KERRY",
+                        status = "active"
+                    )
+                    trans.save()
                 order = Order.objects.create(
-                user=request.user,
-                product=Product.objects.get(pk=pk),
-                amount=amount,
-                transaction = trans.pk
-                ) 
-            else:
+                        user=request.user,
+                        product=Product.objects.get(pk=pk),
+                        amount=amount,
+                        transaction=trans.pk
+                )
+                order.save()
+            except DoesNotExist as error:
                 trans = Transaction.objects.create(
                     user = request.user,
                     shipping = "KERRY",
                     status = "active"
                 )
+                trans.save()
                 order = Order.objects.create(
-                    user=request.user,
-                    product=Product.objects.get(pk=pk),
-                    amount=amount,
-                    transaction=trans
+                        user=request.user,
+                        product=Product.objects.get(pk=pk),
+                        amount=amount,
+                        transaction=trans.pk
                 )
-            order.save()
+                order.save()
             return HttpResponseRedirect(reverse_lazy('main:catalogue'))
 
 
