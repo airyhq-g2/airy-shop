@@ -128,7 +128,7 @@ def addToCart(request):
                 order = Order.objects.create(
                     user=request.user,
                     product=Product.objects.get(pk=pk),
-                    amount=amount
+                    amount=amount,
                     transaction=trans
                 )
             order.save()
