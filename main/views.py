@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-from django.db.models.Model import DoesNotExist
+from django.db.models import Model
 from .forms import SignUpForm, OrderForm
 from .models import Product, Order , Transaction
 
@@ -128,7 +128,7 @@ def addToCart(request):
                         transaction=trans.pk
                 )
                 order.save()
-            except DoesNotExist as error:
+            except Model.DoesNotExist as error:
                 trans = Transaction.objects.create(
                     user = request.user,
                     shipping = "KERRY",
