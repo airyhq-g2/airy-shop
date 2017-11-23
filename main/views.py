@@ -5,9 +5,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-
 from .forms import SignUpForm, OrderForm
-from .models import Product, Order
+from .models import Product, Order , Transaction
 
 
 # Create your views here.
@@ -111,13 +110,27 @@ def addToCart(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
-            pk = form.cleaned_data.get('product')
-            order = Order.objects.create(
+            pk = form.cleaned_data.get('product') 
+            trans = Transaction.objects.get(user=request.user)
+            if(trans.status == "inactive"):
+                order = Order.objects.create(
                 user=request.user,
                 product=Product.objects.get(pk=pk),
                 amount=amount,
-                status=0
-            )
+                transaction = trans.pk
+                ) 
+            else:
+                trans = Transaction.objects.create(
+                    user = request.user,
+                    shipping = "KERRY",
+                    status = "active"
+                )
+                order = Order.objects.create(
+                    user=request.user,
+                    product=Product.objects.get(pk=pk),
+                    amount=amount
+                    transaction=trans
+                )
             order.save()
             return HttpResponseRedirect(reverse_lazy('main:catalogue'))
 
@@ -131,3 +144,4 @@ def removeFromCart(request):
             order = Order.objects.get(pk=pk)
             order.delete()
             return HttpResponseRedirect(reverse_lazy('main:cart'))
+

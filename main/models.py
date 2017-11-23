@@ -24,6 +24,7 @@ class Product(models.Model):
         return '{0}-{1}'.format(self.brand, self.name)
 
 class Transaction(models.Model):
+    user = models.ForeignKey(User)
     shipping = models.CharField(max_length=250)
     status = models.CharField(max_length=250)
 
