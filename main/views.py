@@ -36,6 +36,21 @@ class CatalogueView(ListView):
         context.update(self.additional_context)
         return context
 
+
+    def get_queryset(self):
+        result = super(StoreSearchListView, self),get_queryset()
+
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                        (Q(name_icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                        (Q(brand_icontains=q) for q in query_list))
+            )
+        return result
+
 class ProductDetailView(DetailView):
     template_name = 'main/product-detail.html'
     model = Product
@@ -141,22 +156,6 @@ def addToCart(request):
                 order.save()
             return HttpResponseRedirect(reverse_lazy('main:catalogue'))
 
-class StoreSearchListView(StoreListView):
-    paginate_by = 10
-
-    def get_queryset(self):
-        result = super(StoreSearchListView, self),get_queryset()
-
-        query = self.request.GET.get('q')
-        if query:
-            query_list = query.split()
-            result = result.filter(
-                reduce(operator.and_,
-                        (Q(name_icontains=q) for q in query_list)) |
-                reduce(operator.and_,
-                        (Q(brand_icontains=q) for q in query_list))
-            )
-        return result
 
 @login_required
 def removeFromCart(request):
