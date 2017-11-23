@@ -46,7 +46,6 @@ class CatalogueView(ListView):
                 Product.objects.get(brand=q)
             except ObjectDoesNotExist:
                 return []
-            )
         return result
 
 class ProductDetailView(DetailView):
@@ -76,7 +75,7 @@ class LoginView(views.LoginView):
     template_name = 'main/login.html'
     redirect_authenticated_user = True
     redirect_field_name = reverse_lazy('main:catalogue')
-    
+
 def registerView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
