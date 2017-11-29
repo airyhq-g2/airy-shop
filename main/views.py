@@ -20,12 +20,18 @@ class CatalogueView(ListView):
     additional_context = {}
 
     def get_context_data(self, *args, **kwargs):
+
         if self.request.user.is_authenticated:
             orders = Order.objects.filter(user=self.request.user)
-            transaction = orders[0].transaction
+            sub_total_price = 0
+            try:
+                transaction = orders.first().transaction
+                sub_total_price = transaction.get_grand_total_price()
+            except AttributeError as error:
+                sub_total_price = 0
             self.additional_context = {
                 'cart': orders,
-                'sub_total_price': transaction.get_sub_total_price()
+                'sub_total_price': sub_total_price
             }
         context = super(CatalogueView, self).get_context_data(**kwargs)
         context.update(self.additional_context)
@@ -52,10 +58,15 @@ class ProductDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             orders = Order.objects.filter(user=self.request.user)
-            transaction = orders[0].transaction
+            sub_total_price = 0
+            try:
+                transaction = orders.first().transaction
+                sub_total_price = transaction.get_grand_total_price()
+            except AttributeError as error:
+                sub_total_price = 0
             self.additional_context = {
                 'cart': orders,
-                'sub_total_price': transaction.get_sub_total_price()
+                'sub_total_price': sub_total_price
             }
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context.update(self.additional_context)
@@ -96,11 +107,12 @@ class CartView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
         orders = Order.objects.filter(user=self.request.user)
-        transaction = orders[0].transaction
+        transaction = orders.first().transaction
         context.update({
             'cart': orders,
             'sub_total_price': transaction.get_sub_total_price(),
-            'grand_total_price': transaction.get_grand_total_price()
+            'grand_total_price': transaction.get_grand_total_price(),
+            'transaction': transaction.pk
         })
         return context
 
@@ -112,7 +124,6 @@ def addToCart(request):
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
             pk = form.cleaned_data.get('product')
-            # TODO: Change mock data to real data
             shipping = 'KERRY'
             transaction = Transaction.objects.get_or_create(
                 user=request.user,
@@ -158,6 +169,24 @@ def update_order_ajax(request):
             'totalPrice': total_price,
             'subTotalPrice': sub_total_price,
             'grandTotalPrice': grand_total_price
+        })
+    except ObjectDoesNotExist as error:
+        return JsonResponse({'err': error.__str__()})
+
+
+def change_shipping(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect(reverse_lazy('main:cart'))
+    transaction_pk = request.POST.get('transaction')
+    shipping = request.POST.get('shipping')
+    try:
+        transaction = Transaction.objects.get(pk=transaction_pk)
+        transaction.shipping = shipping
+        transaction.save()
+        grand_total_price = transaction.get_grand_total_price()
+        return JsonResponse({
+            'grandTotalPrice': grand_total_price,
+            'shipping': shipping
         })
     except ObjectDoesNotExist as error:
         return JsonResponse({'err': error.__str__()})
