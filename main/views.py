@@ -174,6 +174,7 @@ def update_order_ajax(request):
         return JsonResponse({'err': error.__str__()})
 
 
+
 def change_shipping(request):
     if request.method != 'POST':
         return HttpResponseRedirect(reverse_lazy('main:cart'))
@@ -190,3 +191,21 @@ def change_shipping(request):
         })
     except ObjectDoesNotExist as error:
         return JsonResponse({'err': error.__str__()})
+
+
+class PaymentSlipView(ListView):
+    template_name = 'main/paymeny-slip.html'
+    model = Order
+
+    def get_queryset(self):
+        self.transaction = Transaction.objects.get(pk=self.kwargs['pk'])
+        return Order.objects.filter(transaction=self.transaction)
+
+    def get_context_data(self, **kwargs):
+        context = super(PaymentSlipView, self).get_context_data(**kwargs)
+        context.update({'transaction': self.transaction})
+        return context
+
+
+def payment_slip(request, pk):
+    return None
