@@ -1,37 +1,31 @@
-import operator
-from django.db.models import Q
 from django.contrib.auth import login, authenticate, views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import SignUpForm, OrderForm
-from .models import Product, Order , Transaction
+from .models import Product, Order, Transaction
 
-# Create your views here.
+
 def indexView(request):
     return render(request, 'main/index.html')
+
 
 class CatalogueView(ListView):
     template_name = 'main/catalogue.html'
     model = Product
     additional_context = {}
 
-
     def get_context_data(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            total_price = 0
             orders = Order.objects.filter(user=self.request.user)
-
-            for order in orders:
-                total_price += order.get_total_price()
-
+            transaction = orders[0].transaction
             self.additional_context = {
                 'cart': orders,
-                'total_price': total_price
+                'sub_total_price': transaction.get_sub_total_price()
             }
         context = super(CatalogueView, self).get_context_data(**kwargs)
         context.update(self.additional_context)
@@ -48,6 +42,7 @@ class CatalogueView(ListView):
                 return []
         return result
 
+
 class ProductDetailView(DetailView):
     template_name = 'main/product-detail.html'
     model = Product
@@ -56,15 +51,11 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            total_price = 0
             orders = Order.objects.filter(user=self.request.user)
-
-            for order in orders:
-                total_price += order.get_total_price()
-
+            transaction = orders[0].transaction
             self.additional_context = {
                 'cart': orders,
-                'total_price': total_price
+                'sub_total_price': transaction.get_sub_total_price()
             }
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context.update(self.additional_context)
@@ -75,6 +66,7 @@ class LoginView(views.LoginView):
     template_name = 'main/login.html'
     redirect_authenticated_user = True
     redirect_field_name = reverse_lazy('main:catalogue')
+
 
 def registerView(request):
     if request.method == 'POST':
@@ -98,57 +90,43 @@ class CartView(LoginRequiredMixin, ListView):
     model = Order
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        transaction = Transaction.objects.get_or_create(user=self.request.user, shipping='KERRY', status='active')[0]
+        return Order.objects.filter(transaction=transaction)
 
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
-        total_price = 0
         orders = Order.objects.filter(user=self.request.user)
-
-        for order in orders:
-            total_price += order.get_total_price()
-
+        transaction = orders[0].transaction
         context.update({
             'cart': orders,
-            'total_price': total_price
+            'sub_total_price': transaction.get_sub_total_price(),
+            'grand_total_price': transaction.get_grand_total_price()
         })
         return context
 
 
-
-
+@login_required
 def addToCart(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse_lazy('main:login'))
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
             pk = form.cleaned_data.get('product')
-            try:
-                trans = Transaction.objects.get(user=request.user, status="inactive")
-                order = Order.objects.create(
-                        user=request.user,
-                        product=Product.objects.get(pk=pk),
-                        amount=amount,
-                        transaction=trans
-                )
-                order.save()
-            except ObjectDoesNotExist as error:
-                trans = Transaction.objects.create(
-                    user = request.user,
-                    shipping = "KERRY",
-                    status = "active"
-                )
-                trans.save()
-                order = Order.objects.create(
-                        user=request.user,
-                        product=Product.objects.get(pk=pk),
-                        amount=amount,
-                        transaction=trans
-                )
-                order.save()
-            return HttpResponseRedirect(reverse_lazy('main:catalogue'))
+            # TODO: Change mock data to real data
+            shipping = 'KERRY'
+            transaction = Transaction.objects.get_or_create(
+                user=request.user,
+                status='active',
+                shipping=shipping
+            )
+            order = Order.objects.create(
+                user=request.user,
+                product=Product.objects.get(pk=pk),
+                amount=amount,
+                transaction=transaction[0]
+            )
+            order.save()
+    return HttpResponseRedirect(reverse_lazy('main:catalogue'))
 
 
 @login_required
@@ -160,3 +138,26 @@ def removeFromCart(request):
             order = Order.objects.get(pk=pk)
             order.delete()
             return HttpResponseRedirect(reverse_lazy('main:cart'))
+
+
+def update_order_ajax(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect(reverse_lazy('main:cart'))
+    amount = request.POST.get('amount')
+    pk = request.POST.get('order')
+    try:
+        order = Order.objects.get(pk=pk)
+        order.amount = int(amount)
+        order.save()
+        total_price = order.get_total_price()
+        sub_total_price = order.transaction.get_sub_total_price()
+        grand_total_price = order.transaction.get_grand_total_price()
+        return JsonResponse({
+            'amount': order.amount,
+            'productId': order.product_id,
+            'totalPrice': total_price,
+            'subTotalPrice': sub_total_price,
+            'grandTotalPrice': grand_total_price
+        })
+    except ObjectDoesNotExist as error:
+        return JsonResponse({'err': error.__str__()})
