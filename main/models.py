@@ -25,7 +25,7 @@ class Product(models.Model):
 
 class Transaction(models.Model):
     user = models.ForeignKey(User)
-    shipping = models.CharField(max_length=250)
+    shipping = models.CharField(max_length=250, default='KERRY')
     status = models.CharField(max_length=250)
     date = models.DateTimeField(auto_now=True)
 

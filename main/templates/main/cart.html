@@ -46,13 +46,15 @@
             <span id="sub-total-price" class="text-r">{{ sub_total_price }}$</span>
         </div>
         <form action="" method="post" class="form-shipping">
+            {% csrf_token %}
+            <input name="transaction" type="hidden" value="{{ transaction }}">
             <h1>Shipping</h1>
             <div class="form-group">
-                <label for=""></label><br>
-                <select name="" id="" class="full-width">
+                <label for="select-shipping" hidden>shipping</label><br>
+                <select name="shipping" id="select-shipping" class="full-width">
                     <option value="KERRY">Kerry</option>
-                    <option value="LINE_MAN">Line man</option>
-                    <option value="GRAB_BIKE">GRAB BIKE</option>
+                    <option value="LINE_MAN">Line Man</option>
+                    <option value="GRAB_BIKE">Grab Bike</option>
                 </select>
             </div>
             {#            <button class="btn btn-white mt-16 mb-16">+ Calculate Shipping</button>#}
