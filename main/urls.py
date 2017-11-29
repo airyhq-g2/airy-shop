@@ -20,6 +20,7 @@ urlpatterns = [
     url('^remove-product/$', views.removeFromCart, name='remove_from_cart'),
     url('^update-order/$', views.update_order_ajax, name='update_order_ajax'),
     url('^change-shipping/$', views.change_shipping, name='change-shipping'),
+    url('^payment-slip/(?P<pk>\d+)/$', views.PaymentSlipView.as_view(), name='payment_slip')
 ]
 
 if settings.DEBUG:

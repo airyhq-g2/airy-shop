@@ -62,7 +62,7 @@
                 <strong>Grand Total: </strong>
                 <span id="grand-total-price">{{ grand_total_price }}$</span>
             </div>
-            <button class="btn btn-default">PAY BY CREDIT/DEBIT</button>
+            <a class="btn btn-default text-c" href="{% url 'main:payment_slip' transaction %}">CONFIRM PAYMENT</a>
             <strong class="text-c mt-16 mb-16"> - OR - </strong>
             <a class="btn btn-white text-c" href="{% url 'main:catalogue' %}">CONTINUE SHOPPING</a>
         </form>

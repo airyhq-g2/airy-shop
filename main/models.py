@@ -29,6 +29,14 @@ class Transaction(models.Model):
     status = models.CharField(max_length=250)
     date = models.DateTimeField(auto_now=True)
 
+    def get_shipping_fee(self):
+        if (self.shipping == 'GRAB_BIKE'):
+            return 100
+        elif (self.shipping == 'LINE_MAN'):
+            return 150
+        elif (self.shipping == 'KERRY'):
+            return 200
+
     def get_sub_total_price(self):
         price = 0
         orders = Order.objects.filter(transaction=self.pk)
@@ -39,13 +47,8 @@ class Transaction(models.Model):
 
     def get_grand_total_price(self):
         price = self.get_sub_total_price()
-        shipping_price = 0
-
-        if(self.shipping == 'GRAB_BIKE'): shipping_price = 100
-        elif(self.shipping == 'LINE_MAN'): shipping_price = 150
-        elif(self.shipping == 'KERRY'): shipping_price = 200
-
-        return price + shipping_price
+        shipping_fee = self.get_shipping_fee()
+        return price + shipping_fee
 
     def __str__(self):
         return 'T#{0}-{1}-{2}-{3}'.format(self.pk, self.user, self.shipping, self.status)

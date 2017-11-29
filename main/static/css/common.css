@@ -5,7 +5,7 @@
 
 body {
     padding-top: 80px;
-    font-family: SugarstyleMillenial-Regular, sans-serif;
+    font-family: sans-serif;
     color: black;
     background: white;
     padding-bottom: 100px;
@@ -239,6 +239,14 @@ body {
     margin-left: 16px;
 }
 
+.ml-32 {
+    margin-left: 32px;
+}
+
+.mr-32 {
+    margin-right: 32px;
+}
+
 .product-item {
     position: relative;
 }
@@ -356,6 +364,22 @@ select {
     align-items: center;
 }
 
+.justify-c {
+    justify-content: center;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
 input {
     border-color: lightgrey;
     background: white;
@@ -379,3 +403,4 @@ input {
         width: 25%;
     }
 }
+
