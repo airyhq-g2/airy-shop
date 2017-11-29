@@ -1,59 +1,69 @@
-{% extends 'base.html' %} {% load static %} {% block style %}
-<link rel="stylesheet" href="{% static '/css/cart.css' %}"> {% endblock %} {% block title %} {{ request.user }} Shopping Cart - AIRY {% endblock %} {% block body %}
-<div class="container ma-8">
-    <span>Shopping Cart</span>
-    <div class="dot-divider"></div>
-    {% for object in object_list %}
-    <div class="product-list">
-        <div class="flex-col">
-            <img class="product-img" src="{{ object.product.pic.url }}" alt="product-img" width="160" height="160">
-        </div>
-        <form action="{% url 'main:remove_from_cart' %}" method="post" class="flex-col">
-            {% csrf_token %}
-            <strong class="ml-16">
-                        <a href="{% url 'main:product_detail' object.product.pk %}" class="unstyled-link">
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static '/css/cart.css' %}">
+{% endblock %}
+{% block title %}
+    {{ request.user }} Shopping Cart - AIRY
+{% endblock %}
+{% block body %}
+    <div class="container ma-8">
+        <span>Shopping Cart</span>
+        <div class="dot-divider"></div>
+        {% for object in object_list %}
+            <div class="product-list">
+                <div class="flex-col">
+                    <img class="product-img" src="{{ object.product.pic.url }}" alt="product-img" width="160"
+                         height="160">
+                </div>
+                <form action="{% url 'main:remove_from_cart' %}" method="post" class="cart-form flex-col">
+                    {% csrf_token %}
+                    <strong class="ml-16">
+                        <a href="{% url 'main:product_detail' object.product_id %}" class="unstyled-link">
                             {{ object.product.name }}
                         </a>
                     </strong>
-            <input type="hidden" name="product" id="product" value="{{ object.pk }}" />
-            <div class="flex-row ml-16 align-items-center">
-                <input type="number" name="amount" id="amount" value="{{ object.amount }}" min="1" class="input-sm" />
-            </div>
-            <span class="ml-16 mt-16">
+                    <input type="hidden" name="product" id="product" value="{{ object.product.pk }}"/>
+                    <input type="hidden" name="order" id="order" value="{{ object.pk }}"/>
+                    <div class="flex-row ml-16 align-items-center">
+                        <input id="product-amount-{{ object.product_id }}" type="number" name="amount"
+                               value="{{ object.amount }}" min="1"
+                               class="input-sm"/>
+                    </div>
+                    <span class="ml-16 mt-16">
                         <strong>Price: </strong>
-                        <span> {{ object.get_total_price }}$ </span><br>
+                        <span id="product-total-price-{{ object.product_id }}"> {{ object.get_total_price }}$ </span><br>
             <input type="submit" class="btn btn-default mt-16" value="remove"><br>
             </span>
+                </form>
+            </div>
+        {% endfor %}
+        <div class="flex-row space-between">
+        </div>
+        <div class="dot-divider"></div>
+        <div class="flex-row space-between">
+            <strong class="text-l">SUBTOTAL: </strong>
+            <span id="sub-total-price" class="text-r">{{ sub_total_price }}$</span>
+        </div>
+        <form action="" method="post" class="form-shipping">
+            <h1>Shipping</h1>
+            <div class="form-group">
+                <label for=""></label><br>
+                <select name="" id="" class="full-width">
+                    <option value="KERRY">Kerry</option>
+                    <option value="LINE_MAN">Line man</option>
+                    <option value="GRAB_BIKE">GRAB BIKE</option>
+                </select>
+            </div>
+            {#            <button class="btn btn-white mt-16 mb-16">+ Calculate Shipping</button>#}
+            <div class="flex-row space-between mt-16 mb-16">
+                <strong>Grand Total: </strong>
+                <span id="grand-total-price">{{ grand_total_price }}$</span>
+            </div>
+            <button class="btn btn-default">PAY BY CREDIT/DEBIT</button>
+            <strong class="text-c mt-16 mb-16"> - OR - </strong>
+            <a class="btn btn-white text-c" href="{% url 'main:catalogue' %}">CONTINUE SHOPPING</a>
         </form>
     </div>
-    {% endfor %}
-    <div class="flex-row space-between">
-    </div>
-    <div class="dot-divider"></div>
-    <div class="flex-row space-between">
-        <strong class="text-l">SUBTOTAL: </strong>
-        <span class="text-r">{{ total_price }}$</span>
-    </div>
-    <form action="" method="post" class="form-shipping">
-        <h1>Shipping</h1>
-        <div class="form-group">
-            <label for="">Country</label><br>
-            <select name="" id="" class="full-width">
-                    <option value="A">A</option>
-                </select>
-        </div>
-        <div class="form-group">
-            <label for="">Zip / Postal Code</label>
-            <input type="number" name="" id="">
-        </div>
-        <button class="btn btn-white mt-16 mb-16">+ Calculate Shipping</button>
-        <div class="flex-row space-between mt-16 mb-16">
-            <strong>Grand Total: </strong>
-            <span>{{ total_price }}$</span>
-        </div>
-        <button class="btn btn-default">PAY BY CREDIT/DEBIT</button>
-        <strong class="text-c mt-16 mb-16"> - OR - </strong>
-        <a class="btn btn-white text-c" href="{% url 'main:catalogue' %}">CONTINUE SHOPPING</a>
-    </form>
-</div>
+    <script src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

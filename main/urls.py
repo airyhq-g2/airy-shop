@@ -17,7 +17,8 @@ urlpatterns = [
     url('^register/$', views.registerView, name='register'),
     url('^cart/$', views.CartView.as_view(), name='cart'),
     url('^add-product/$', views.addToCart, name='add_to_cart'),
-    url('^remove-product/$', views.removeFromCart, name='remove_from_cart')
+    url('^remove-product/$', views.removeFromCart, name='remove_from_cart'),
+    url('^update-order/$', views.update_order_ajax, name='update_order_ajax')
 ]
 
 if settings.DEBUG:

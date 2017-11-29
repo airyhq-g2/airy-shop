@@ -27,19 +27,28 @@ class Transaction(models.Model):
     user = models.ForeignKey(User)
     shipping = models.CharField(max_length=250)
     status = models.CharField(max_length=250)
+    date = models.DateTimeField(auto_now=True)
 
-    def get_sum_price(self):
+    def get_sub_total_price(self):
         price = 0
-        shipping_price = 0
         orders = Order.objects.filter(transaction=self.pk)
+
+        for order in orders: price += order.get_total_price()
+
+        return price
+
+    def get_grand_total_price(self):
+        price = self.get_sub_total_price()
+        shipping_price = 0
 
         if(self.shipping == 'GRAB_BIKE'): shipping_price = 100
         elif(self.shipping == 'LINE_MAN'): shipping_price = 150
         elif(self.shipping == 'KERRY'): shipping_price = 200
 
-        for order in orders: price += order.get_total_price()
-
         return price + shipping_price
+
+    def __str__(self):
+        return 'T#{0}-{1}-{2}-{3}'.format(self.pk, self.user, self.shipping, self.status)
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,6 +59,11 @@ class Order(models.Model):
 
     def get_total_price(self):
         return self.product.price * self.amount
+
+    def __str__(self):
+        return 'O#{0}-{1}-{2}-{3}-{4}-{5}'.format(self.pk, self.user, self.product, self.amount, self.date,
+                                                  self.transaction_id)
+
 
 class Manager(Transaction):
     class Meta:
