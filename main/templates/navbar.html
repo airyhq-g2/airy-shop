@@ -44,11 +44,11 @@
         height: 45px;
     }
     .form-style-8 input[type="submit"]{
-        -moz-box-shadow: inset 0px 1px 0px 0px #85024E;
-        -webkit-box-shadow: inset 0px 1px 0px 0px #85024E;
-        box-shadow: inset 0px 1px 0px 0px #85024E;
-        background-color: #EE0479;
-        border: 1px solid #99004D;
+        -moz-box-shadow: inset 0px 1px 0px 0px #C2185B
+        -webkit-box-shadow: inset 0px 1px 0px 0px #C2185B
+        box-shadow: inset 0px 1px 0px 0px #C2185B
+        background-color: #E91E63
+        border: 1px solid #C2185B
         display: inline-block;
         margin-top: 21px;
         cursor: pointer;
@@ -63,8 +63,8 @@
     .form-style-8 input[type="button"]:hover, 
     .form-style-8 input[type="submit"]:hover {
 
-        background:linear-gradient(to bottom, #EE0479 5%, #85024E 100%);
-        background-color:#85024E;
+        background:linear-gradient(to bottom, #E91E63 5%, #C2185B 100%);
+        background-color:#E91E63;
     }
    
     </style>
@@ -77,8 +77,8 @@
     </div>
     <div class="form-style-8">
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
-		<input type="text" name="q" placeholder="Search Here">
-		<input type="submit" value="search">
+		<input type="text" name="q" placeholder="Search Here1">
+		<input type="button" value="search">
         <select name="choice">
         <option value="price" name="price">price</option>
         <option value="brand" name="brand">brand</option>
