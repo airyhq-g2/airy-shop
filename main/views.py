@@ -47,11 +47,11 @@ class CatalogueView(ListView):
         if query:
             try:
                   data = self.request.GET.get("choice")
-                  if data == 'price':
+                  if data == "price":
                     result = Product.objects.filter(price__lte=query)
-                  if data == 'brand':
+                  if data == "brand":
                     result = Product.objects.filter(brand__icontains=query)
-                  if data == 'name':
+                  if data == "name":
                     result = Product.objects.filter(name__icontains=query)
             except ObjectDoesNotExist:
                 return []
