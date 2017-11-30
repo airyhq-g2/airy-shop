@@ -131,10 +131,21 @@
         {% endif %}
         {% if request.user.is_authenticated %}
         <li class="collapse-li">
+                <a href="{% url 'main:profile_edit_info' %}" class="unstyled-link">
+                    <strong>Edit Profile</strong>
+                </a>
+            </li>
+            <li class="collapse-li">
+                    <a href="{% url 'main:profile_tracking' %}" class="unstyled-link">
+                        <strong>Tracking</strong>
+                    </a>
+                </li>
+        <li class="collapse-li">
             <a href="{% url 'main:logout' %}" class="unstyled-link">
                 <strong>Sign out</strong>
             </a>
         </li>
+        
         {% endif %}
     </ul>
 </div>
