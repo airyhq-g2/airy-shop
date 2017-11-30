@@ -5,8 +5,7 @@
     .form-style-8{
         font-family: 'Open Sans Condensed', arial, sans;
         width: 500px;
-        background: #FFFFFF;
-        margin: 50px auto;
+        background: transparent;
         display: inline-block
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
         -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
@@ -20,7 +19,7 @@
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         outline: none;
-        display: inline-block;
+        display: block;
         width: 30%;
         padding: 7px;
         border: none;
@@ -60,7 +59,7 @@
     </div>
     <div class="form-style-8">
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
-		<input type="text" name="q" placeholder="Search Here3">
+		<input type="text" name="q" placeholder="Search Here5">
 		<input type="submit" value="search">
 		<!--<input type="checkbox" name="price">price</input>
 		<input type="checkbox" name="brand">brand</input>
