@@ -40,6 +40,7 @@ class CatalogueView(ListView):
     def get_queryset(self):
         result = super(CatalogueView, self).get_queryset()
         priceBox = self.request.GET.get('price')
+        brandBox = self.request.GET.get('brand')
         nameBox = self.request.GET.get('name')
         query = self.request.GET.get('q')
         if query:
