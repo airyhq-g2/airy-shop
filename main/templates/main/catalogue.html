@@ -11,7 +11,8 @@
 		<form action="{% url 'main:catalogue' %}" method="GET">
 			<input type="text" name="q">
 			<input type="submit" value="search">
-			<input type="searchByPrice" value="price">
+			<input type="submit" value="price">
+			<input type="submit" value="name">
 		</form>
         {% for product in object_list %}
             <div class="product-item">
