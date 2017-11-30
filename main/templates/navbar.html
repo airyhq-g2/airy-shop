@@ -11,12 +11,12 @@
 		<!--<input type="checkbox" name="price">price</input>
 		<input type="checkbox" name="brand">brand</input>
 	    <input type="checkbox" name="name">name</input>-->
+        <select name="choice">
+          <option value="price" name="price">price</option>
+          <option value="brand" name="brand">brand</option>
+          <option value="name" name="name">name</option>
+        </select>
 	</form>
-    <select name="choice">
-        <option value="price" name="price">price</option>
-        <option value="brand" name="brand">brand</option>
-        <option value="name" name="name">name</option>
-    </select>
     <div class="action">
         <button class="btn btn-icon" id="basket-toggler">
             <img src="{% static 'imgs/shopping_basket_black.svg' %}" alt="shopping-basket">
