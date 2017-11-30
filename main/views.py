@@ -44,14 +44,15 @@ class CatalogueView(ListView):
         # brandBox = self.request.GET.get('brand')
         # nameBox = self.request.GET.get('name')
         query = self.request.GET.get('q')
-        data =  self.cleaned_data['choice']
         if query:
             try:
-                if data == 'price':
+                if self.request.GET.get("choice")
+                  data = self.request.GET.get("choice")
+                  if data == 'price':
                     result = Product.objects.filter(price__lte=query)
-                if data == 'brand':
+                  if data == 'brand':
                     result = Product.objects.filter(brand__icontains=query)
-                if data == 'name':
+                  if data == 'name':
                     result = Product.objects.filter(name__icontains=query)
             except ObjectDoesNotExist:
                 return []
