@@ -43,7 +43,7 @@ class CatalogueView(ListView):
         query = self.request.GET.get('q')
         if query:
             try:
-                result = [Product.objects.filter(brand=query)]
+                result = Product.objects.filter(brand__icontains=query)
             except ObjectDoesNotExist:
                 return []
         return result
