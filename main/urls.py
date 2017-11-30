@@ -26,6 +26,7 @@ urlpatterns = [
     url('^profile/dashboard/$', views.ProfileDashBoardView.as_view(), name='profile_dashboard'),
     url('^profile/tracking/$', views.ProfileTrackingView.as_view(), name='profile_tracking'),
     url('^profile/edit-info/$', views.ProfileEditInfo.as_view(), name='profile_edit_info'),
+    url('^contact/$', views.ContactView.as_view(), name='contact'),
 ]
 
 if settings.DEBUG:
