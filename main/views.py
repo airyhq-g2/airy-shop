@@ -203,3 +203,5 @@ class PaymentSlipView(ListView):
         context = super(PaymentSlipView, self).get_context_data(**kwargs)
         context.update({'transaction': self.transaction})
         return context
+    
+    
