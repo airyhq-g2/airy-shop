@@ -9,8 +9,7 @@
         display: inline-block
     
     }
-    .form-style-8 input[type="text"],
-    .form-style-8 select 
+    .form-style-8 input[type="text"]
     {
         box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -18,6 +17,22 @@
         outline: none;
         display: inline-block;
         width: 30%;
+        padding: 7px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        background: transparent;
+        margin-bottom: 10px;
+        font: 16px Arial, Helvetica, sans-serif;
+        height: 45px;
+    }
+    .form-style-8 select 
+    {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        display: inline-block;
+        width: 10%;
         padding: 7px;
         border: none;
         border-bottom: 1px solid #ddd;
@@ -46,6 +61,7 @@
         background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
         background-color:#34CACA;
     }
+   
     </style>
 {% endblock %}
 <nav class="nav">
@@ -58,9 +74,6 @@
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
 		<input type="text" name="q" placeholder="Search Here">
 		<input type="submit" value="search">
-		<!--<input type="checkbox" name="price">price</input>
-		<input type="checkbox" name="brand">brand</input>
-	    <input type="checkbox" name="name">name</input>-->
         <select name="choice">
         <option value="price" name="price">price</option>
         <option value="brand" name="brand">brand</option>
