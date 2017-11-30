@@ -9,9 +9,14 @@
         <form action="{% url 'main:catalogue' %}" method="GET">
 			<input type="text" name="q">
 			<input type="submit" value="search">
-			<input type="checkbox" name="price">price</input>
+			<!--<input type="checkbox" name="price">price</input>
 			<input type="checkbox" name="brand">brand</input>
-			<input type="checkbox" name="name">name</input>
+			<input type="checkbox" name="name">name</input>-->
+            <select>
+              <option value="volvo" name="price">price</option>
+              <option value="saab" name="brand">brand</option>
+              <option value="opel" name="name">name</option>
+            </select>
 		</form>
     </div>
     <div class="action">
