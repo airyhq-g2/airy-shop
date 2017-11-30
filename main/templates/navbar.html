@@ -13,26 +13,7 @@
         -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
     
     }
-    .form-style-8 h2{
-        background: #4D4D4D;
-        text-transform: uppercase;
-        font-family: 'Open Sans Condensed', sans-serif;
-        color: #797979;
-        font-size: 18px;
-        font-weight: 100;
-        padding: 20px;
-        margin: -30px -30px 30px -30px;
-    }
     .form-style-8 input[type="text"],
-    .form-style-8 input[type="date"],
-    .form-style-8 input[type="datetime"],
-    .form-style-8 input[type="email"],
-    .form-style-8 input[type="number"],
-    .form-style-8 input[type="search"],
-    .form-style-8 input[type="time"],
-    .form-style-8 input[type="url"],
-    .form-style-8 input[type="password"],
-    .form-style-8 textarea,
     .form-style-8 select 
     {
         box-sizing: border-box;
@@ -49,11 +30,6 @@
         font: 16px Arial, Helvetica, sans-serif;
         height: 45px;
     }
-    .form-style-8 textarea{
-        resize:none;
-        overflow: hidden;
-    }
-    .form-style-8 input[type="button"], 
     .form-style-8 input[type="submit"]{
         -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
         -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
@@ -83,12 +59,12 @@
         </a>
     </div>
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
-		<input type="text" name="q" placeholder="Search Here">
-		<input type="submit" value="search">
+		<input type="text" name="q" placeholder="Search Here2" class="form-style-8">
+		<input type="submit" value="search" class="form-style-8">
 		<!--<input type="checkbox" name="price">price</input>
 		<input type="checkbox" name="brand">brand</input>
 	    <input type="checkbox" name="name">name</input>-->
-        <select name="choice">
+        <select name="choice" class="form-style-8">
         <option value="price" name="price">price</option>
         <option value="brand" name="brand">brand</option>
         <option value="name" name="name">name</option>
