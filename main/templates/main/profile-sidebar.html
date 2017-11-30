@@ -1,0 +1,29 @@
+<div class="">
+    <ul class="collapse-ul">
+        <li class="mb-32">
+            <a href="{% url 'main:profile_dashboard' %}" class="unstyled-link">
+                <strong>Dashboard</strong>
+            </a>
+        </li>
+        <li class="mb-32">
+            <a href="{% url 'main:profile_edit_info' %}" class="unstyled-link">
+                <strong>Edit information</strong>
+            </a>
+        </li>
+        <li class="mb-32">
+            <a href="{% url 'main:payment_slip' transaction.pk %}" class="unstyled-link">
+                <strong>Print payment slip</strong>
+            </a>
+        </li>
+        <li class="mb-32">
+            <a href="{% url 'main:profile_tracking' %}" class="unstyled-link">
+                <strong>Tracking your transaction</strong>
+            </a>
+        </li>
+        <li class="mb-32">
+            <a href="{% url 'main:logout' %}" class="unstyled-link">
+                <strong>Sign out</strong>
+            </a>
+        </li>
+    </ul>
+</div>

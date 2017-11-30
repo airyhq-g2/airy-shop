@@ -4,10 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import SignUpForm, OrderForm
-from .models import Product, Order, Transaction
+from .forms import SignUpForm, OrderForm, UserEditForm
+from .models import Product, Order, Transaction, UserInfo
+from django.contrib.auth.models import User
 
 
 def indexView(request):
@@ -202,4 +203,119 @@ class PaymentSlipView(ListView):
     def get_context_data(self, **kwargs):
         context = super(PaymentSlipView, self).get_context_data(**kwargs)
         context.update({'transaction': self.transaction})
+        return context
+
+
+class ProfileDashBoardView(LoginRequiredMixin, DetailView):
+    template_name = 'main/profile-dashboard.html'
+    model = UserInfo
+
+    additional_context = {}
+
+    def get_object(self, queryset=None):
+        return UserInfo.objects.get_or_create(user=self.request.user)[0]
+
+    def get_context_data(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            orders = Order.objects.filter(user=self.request.user)
+            try:
+                active_transaction = Transaction.objects.get(user=self.request.user, status='active')
+            except ObjectDoesNotExist:
+                active_transaction = None
+            try:
+                transaction = orders.first().transaction
+                sub_total_price = transaction.get_grand_total_price()
+            except AttributeError as error:
+                sub_total_price = None
+                transaction = None
+            self.additional_context = {
+                'cart': orders,
+                'sub_total_price': sub_total_price,
+                'transaction': transaction,
+                'active_transaction': active_transaction
+            }
+        context = super(ProfileDashBoardView, self).get_context_data(**kwargs)
+        context.update(self.additional_context)
+        return context
+
+
+class ProfileTrackingView(LoginRequiredMixin, ListView):
+    template_name = 'main/profile-tracking.html'
+    model = Transaction
+
+    additional_context = {}
+
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.request.user)
+
+    def get_context_data(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            orders = Order.objects.filter(user=self.request.user)
+            sub_total_price = 0
+            try:
+                transaction = orders.first().transaction
+                sub_total_price = transaction.get_grand_total_price()
+            except AttributeError as error:
+                sub_total_price = 0
+            self.additional_context = {
+                'cart': orders,
+                'sub_total_price': sub_total_price,
+                'transaction': transaction
+            }
+        context = super(ProfileTrackingView, self).get_context_data(**kwargs)
+        context.update(self.additional_context)
+        return context
+
+
+class ProfileEditInfo(LoginRequiredMixin, FormView):
+    template_name = 'main/profile-edit-infomation.html'
+
+    form_class = UserEditForm
+
+    success_url = reverse_lazy('main:profile_dashboard')
+
+    additional_context = {}
+
+    # def get_queryset(self):
+    #     return Transaction.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        user = User.objects.get(pk=self.request.user.pk)
+        user_info = UserInfo.objects.get_or_create(user=self.request.user)[0]
+
+        user_name = form.cleaned_data.get('user_name')
+        email = form.cleaned_data.get('email')
+        first_name = form.cleaned_data.get('first_name')
+        last_name = form.cleaned_data.get('last_name')
+        birth_date = form.cleaned_data.get('birth_date')
+        address = form.cleaned_data.get('address')
+
+        if user_name != '': user.username = user_name
+        if email != '': user.email = email
+        if first_name != '': user.first_name = first_name
+        if last_name != '': user.last_name = last_name
+        if birth_date != '': user_info.birth_date = birth_date
+        if address != '': user_info.address = address
+
+        user.save()
+        user_info.save()
+
+        return super(ProfileEditInfo, self).form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            orders = Order.objects.filter(user=self.request.user)
+            sub_total_price = 0
+            try:
+                transaction = orders.first().transaction
+                sub_total_price = transaction.get_grand_total_price()
+            except AttributeError as error:
+                sub_total_price = 0
+            self.additional_context = {
+                'cart': orders,
+                'sub_total_price': sub_total_price,
+                'transaction': transaction,
+            }
+        context = super(ProfileEditInfo, self).get_context_data(**kwargs)
+        context.update(self.additional_context)
         return context

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+{% endblock %}
+{% block title %}
+    {{ request.user }} Profile Tracking
+{% endblock %}
+{% block body %}
+    <div class="container flex-row align-items-center">
+        {% include 'main/profile-sidebar.html' %}
+        <div class="w-70 ml-32">
+            <div class="full-width">
+                <h1>Tracking System</h1>
+            </div>
+            <table class="full-width">
+                <tr class="bg-brown">
+                    <th>ID</th>
+                    <th>Products</th>
+                    <th>Shipping</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ object.pk }}</td>
+                        <td>
+                            {% for order in object.order_set.all %}
+                                {{ order.product.name }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>{{ object.shipping }}</td>
+                        <td>{{ object.status }}</td>
+                        <td>{{ object.date }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+{% endblock %}
