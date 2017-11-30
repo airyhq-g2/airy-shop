@@ -3,7 +3,6 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
-from django.conf.urls import patterns, include
 from myproject.admin import admin_site
 
 from main import views
