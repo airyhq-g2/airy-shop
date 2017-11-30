@@ -39,11 +39,14 @@ class CatalogueView(ListView):
 
     def get_queryset(self):
         result = super(CatalogueView, self).get_queryset()
-
+        priceBox = self.request.GET.get('price')
         query = self.request.GET.get('q')
         if query:
             try:
-                result = Product.objects.filter(brand__icontains=query)
+                if priceBox:
+                    result = Product.objects.filter(price__lte=query)
+
+                # result = Product.objects.filter(brand__icontains=query)
             except ObjectDoesNotExist:
                 return []
         return result
@@ -203,5 +206,3 @@ class PaymentSlipView(ListView):
         context = super(PaymentSlipView, self).get_context_data(**kwargs)
         context.update({'transaction': self.transaction})
         return context
-    
-    
