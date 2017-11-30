@@ -40,17 +40,18 @@ class CatalogueView(ListView):
 
     def get_queryset(self):
         result = super(CatalogueView, self).get_queryset()
-        priceBox = self.request.value('price')
-        brandBox = self.request.value('brand')
-        nameBox = self.request.value('name')
+        # priceBox = self.request.GET.get('price')
+        # brandBox = self.request.GET.get('brand')
+        # nameBox = self.request.GET.get('name')
         query = self.request.GET.get('q')
+        data =  self.cleaned_data['choice']
         if query:
             try:
-                if priceBox:
+                if data == 'price':
                     result = Product.objects.filter(price__lte=query)
-                if brandBox:
+                if data == 'brand':
                     result = Product.objects.filter(brand__icontains=query)
-                if nameBox:
+                if data == 'name':
                     result = Product.objects.filter(name__icontains=query)
             except ObjectDoesNotExist:
                 return []
