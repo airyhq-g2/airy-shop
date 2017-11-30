@@ -8,12 +8,11 @@
 {% endblock %}
 {% block body %}
 	<div class="product-table">
-		
         {% for product in object_list %}
             <div class="product-item">
 			<div class="product-overlay">
                 <a href="{% url 'main:product_detail' product.pk %}"
-                   class="product-overlay-text flex-col unstyled-link">
+                class="product-overlay-text flex-col unstyled-link">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price }}$</p>
                     <a href="" class="btn btn-icon">
