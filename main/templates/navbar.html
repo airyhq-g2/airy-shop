@@ -16,7 +16,7 @@
         -moz-box-sizing: border-box;
         outline: none;
         display: inline-block;
-        width: 50%;
+        width: 64%;
         padding: 7px;
         border: none;
         margin-top: 10px;
@@ -44,13 +44,13 @@
         height: 45px;
     }
     .form-style-8 input[type="submit"]{
-        -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
-        -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
-        box-shadow: inset 0px 1px 0px 0px #45D6D6;
-        background-color: #2CBBBB;
-        border: 1px solid #27A0A0;
+        -moz-box-shadow: inset 0px 1px 0px 0px #85024E;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #85024E;
+        box-shadow: inset 0px 1px 0px 0px #85024E;
+        background-color: #EE0479;
+        border: 1px solid #99004D;
         display: inline-block;
-        margin-top: 10px;
+        margin-top: 21px;
         cursor: pointer;
         color: #FFFFFF;
         font-family: 'Open Sans Condensed', sans-serif;
@@ -63,8 +63,8 @@
     .form-style-8 input[type="button"]:hover, 
     .form-style-8 input[type="submit"]:hover {
 
-        background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
-        background-color:#34CACA;
+        background:linear-gradient(to bottom, #EE0479 5%, #85024E 100%);
+        background-color:#85024E;
     }
    
     </style>
@@ -77,7 +77,7 @@
     </div>
     <div class="form-style-8">
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
-		<input type="text" name="q" placeholder="Search Here1">
+		<input type="text" name="q" placeholder="Search Here">
 		<input type="submit" value="search">
         <select name="choice">
         <option value="price" name="price">price</option>
