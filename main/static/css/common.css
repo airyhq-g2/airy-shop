@@ -380,6 +380,10 @@ select {
     width: 40%;
 }
 
+.w-70 {
+    width: 70%;
+}
+
 input {
     border-color: lightgrey;
     background: white;
