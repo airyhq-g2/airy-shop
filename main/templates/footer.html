@@ -1,4 +1,7 @@
 <footer class="footer mt-16">
+    {% block style %}
+    <link rel="stylesheet" href="{% static '/css/footer.css' %}">
+    {% endblock %}
     <div class="flex-row">
         <button class="btn-white full-width" style="
         font-family: LogoFont;
@@ -18,12 +21,18 @@
         </div>
         <div class="flex-col text-l">
             <strong>AIRY SOCIAL</strong>
+            <a href="https://twitter.com/">
             <small>Twitter</small>
+            </a>
             <a href="https://www.facebook.com/">
             <small>Facebook</small>
             </a>
+            <a href="https://www.instagram.com/">
             <small>Instragram</small>
+            </a>
+            <a href="https://www.instagram.com/">
             <small>Shop Insta</small>
+            </a>
         </div>
         <div class="flex-col text-l">
             <strong>JOIN US</strong>
