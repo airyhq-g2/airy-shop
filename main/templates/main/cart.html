@@ -10,34 +10,36 @@
     <div class="container ma-8">
         <span>Shopping Cart</span>
         <div class="dot-divider"></div>
-        {% for object in object_list %}
-            <div class="product-list">
-                <div class="flex-col">
-                    <img class="product-img" src="{{ object.product.pic.url }}" alt="product-img" width="160"
-                         height="160">
-                </div>
-                <form action="{% url 'main:remove_from_cart' %}" method="post" class="cart-form flex-col">
-                    {% csrf_token %}
-                    <strong class="ml-16">
-                        <a href="{% url 'main:product_detail' object.product_id %}" class="unstyled-link">
-                            {{ object.product.name }}
-                        </a>
-                    </strong>
-                    <input type="hidden" name="product" id="product" value="{{ object.product.pk }}"/>
-                    <input type="hidden" name="order" id="order" value="{{ object.pk }}"/>
-                    <div class="flex-row ml-16 align-items-center">
-                        <input id="product-amount-{{ object.product_id }}" type="number" name="amount"
-                               value="{{ object.amount }}" min="1"
-                               class="input-sm"/>
+        <div id="order-list">
+            {% for object in object_list %}
+                <div class="product-list">
+                    <div class="flex-col">
+                        <img class="product-img" src="{{ object.product.pic.url }}" alt="product-img" width="160"
+                             height="160">
                     </div>
-                    <span class="ml-16 mt-16">
+                    <form action="{% url 'main:remove_from_cart' %}" method="post" class="cart-form flex-col">
+                        {% csrf_token %}
+                        <input type="hidden" name="product" id="product" value="{{ object.product.pk }}"/>
+                        <input type="hidden" name="order" id="order" value="{{ object.pk }}"/>
+                        <strong class="ml-16">
+                            <a href="{% url 'main:product_detail' object.product_id %}" class="unstyled-link">
+                                {{ object.product.name }}
+                            </a>
+                        </strong>
+                        <div class="flex-row ml-16 align-items-center">
+                            <input id="product-amount-{{ object.product_id }}" type="number" name="amount"
+                                   value="{{ object.amount }}" min="1"
+                                   class="input-sm"/>
+                        </div>
+                        <span class="ml-16 mt-16">
                         <strong>Price: </strong>
                         <span id="product-total-price-{{ object.product_id }}"> {{ object.get_total_price }}$ </span><br>
-            <input type="submit" class="btn btn-default mt-16" value="remove"><br>
-            </span>
-                </form>
-            </div>
-        {% endfor %}
+                        <input type="submit" class="product-remove btn btn-default mt-16" value="remove"><br>
+                    </span>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
         <div class="flex-row space-between">
         </div>
         <div class="dot-divider"></div>

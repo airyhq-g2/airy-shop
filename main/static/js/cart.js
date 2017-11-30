@@ -46,7 +46,14 @@ const updateInfo = ({amount, productId, totalPrice, subTotalPrice, grandTotalPri
     document.getElementById('grand-total-price').innerText = grandTotalPrice
 }
 
+const onRemoveOrder = async (event = window.event) => {
+    const form = event.target.parentNode.parentNode
+    const {orders} = await fetchInfo(csrftoken, form, 'POST', '/remove-product-ajax/')
+}
+
 const amountElements = document.getElementsByName('amount')
 amountElements.forEach(element => element.addEventListener('change', onChangeAmount))
 
 document.getElementById('select-shipping').addEventListener('change', onChangeShipping)
+
+document.getElementsByName('product-remove').forEach(element => element.addEventListener('click', onRemoveOrder))
