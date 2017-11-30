@@ -143,12 +143,10 @@ def addToCart(request):
 @login_required
 def removeFromCart(request):
     if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            pk = form.cleaned_data.get('product')
-            order = Order.objects.get(pk=pk)
-            order.delete()
-            return HttpResponseRedirect(reverse_lazy('main:cart'))
+        pk = request.POST.get('order')
+        order = Order.objects.get(pk=pk)
+        order.delete()
+        return HttpResponseRedirect(reverse_lazy('main:cart'))
 
 
 def update_order_ajax(request):
@@ -205,7 +203,3 @@ class PaymentSlipView(ListView):
         context = super(PaymentSlipView, self).get_context_data(**kwargs)
         context.update({'transaction': self.transaction})
         return context
-
-
-def payment_slip(request, pk):
-    return None
