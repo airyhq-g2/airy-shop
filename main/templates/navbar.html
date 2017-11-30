@@ -43,28 +43,6 @@
         font: 16px Arial, Helvetica, sans-serif;
         height: 45px;
     }
-    .form-style-8 input[type="submit"]{
-        -moz-box-shadow: inset 0px 1px 0px 0px #C2185B
-        -webkit-box-shadow: inset 0px 1px 0px 0px #C2185B
-        box-shadow: inset 0px 1px 0px 0px #C2185B
-        background-color: #E91E63
-        border: 1px solid #C2185B
-        display: inline-block;
-        margin-top: 21px;
-        cursor: pointer;
-        color: black;
-        font-size: 14px;
-        padding: 8px 18px;
-        text-decoration: none;
-        text-transform: uppercase;
-        float: right;
-    }
-    .form-style-8 input[type="button"]:hover, 
-    .form-style-8 input[type="submit"]:hover {
-
-        background-color:#E91E63;
-    }
-   
     </style>
 {% endblock %}
 <nav class="nav">
@@ -76,7 +54,6 @@
     <div class="form-style-8">
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
 		<input type="text" name="q" placeholder="Search Here">
-		<input type="submit" value="search">
         <select name="choice">
         <option value="price" name="price">price</option>
         <option value="brand" name="brand">brand</option>
