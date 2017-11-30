@@ -1,9 +1,10 @@
 {% load static %}
 {% block style %}
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>    
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
 <style type="text/css">
     .form-style-8{
-        font-family: 'Open Sans Condensed', arial, sans;
+        font-family: 'LogoFont';
         width: 500px;
         background: transparent;
         display: inline-block
@@ -15,6 +16,7 @@
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         outline: none;
+        font-family: 'LogoFont';
         display: inline-block;
         width: 80%;
         padding: 7px;
@@ -32,6 +34,7 @@
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         outline: none;
+        font-family: 'LogoFont';
         display: inline-block;
         width: 15%;
         margin-top: 10px;
@@ -55,7 +58,7 @@
     <form action="{% url 'main:catalogue' %}" method="GET" id="searchform">
 		<input type="text" name="q" placeholder="Search Here">
         <select name="choice">
-        <option value="price" name="price">price</option>
+        <option value="price" name="price">&lt;&nbsp;price</option>
         <option value="brand" name="brand">brand</option>
         <option value="name" name="name">name</option>
         </select>
@@ -128,10 +131,21 @@
         {% endif %}
         {% if request.user.is_authenticated %}
         <li class="collapse-li">
+                <a href="{% url 'main:profile_edit_info' %}" class="unstyled-link">
+                    <strong>Edit Profile</strong>
+                </a>
+            </li>
+            <li class="collapse-li">
+                    <a href="{% url 'main:profile_tracking' %}" class="unstyled-link">
+                        <strong>Tracking</strong>
+                    </a>
+                </li>
+        <li class="collapse-li">
             <a href="{% url 'main:logout' %}" class="unstyled-link">
                 <strong>Sign out</strong>
             </a>
         </li>
+        
         {% endif %}
     </ul>
 </div>
