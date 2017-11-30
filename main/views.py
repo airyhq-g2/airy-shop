@@ -46,7 +46,6 @@ class CatalogueView(ListView):
         query = self.request.GET.get('q')
         if query:
             try:
-                if self.request.GET.get("choice")
                   data = self.request.GET.get("choice")
                   if data == 'price':
                     result = Product.objects.filter(price__lte=query)
