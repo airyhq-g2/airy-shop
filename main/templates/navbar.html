@@ -5,6 +5,15 @@
             <img src="{% static 'imgs/brand_logo_inverse.png' %}" alt="brand-logo" class="brand-logo">
         </a>
     </div>
+    <div>
+        <form action="{% url 'main:catalogue' %}" method="GET">
+			<input type="text" name="q">
+			<input type="submit" value="search">
+			<input type="checkbox" name="price">price</input>
+			<input type="checkbox" name="brand">brand</input>
+			<input type="checkbox" name="name">name</input>
+		</form>
+    </div>
     <div class="action">
         <button class="btn btn-icon" id="basket-toggler">
             <img src="{% static 'imgs/shopping_basket_black.svg' %}" alt="shopping-basket">
