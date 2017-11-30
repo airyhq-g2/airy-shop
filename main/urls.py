@@ -23,6 +23,9 @@ urlpatterns = [
     url('^update-order/$', views.update_order_ajax, name='update_order_ajax'),
     url('^change-shipping/$', views.change_shipping, name='change-shipping'),
     url('^payment-slip/(?P<pk>\d+)/$', views.PaymentSlipView.as_view(), name='payment_slip'),
+    url('^profile/dashboard/$', views.ProfileDashBoardView.as_view(), name='profile_dashboard'),
+    url('^profile/tracking/$', views.ProfileTrackingView.as_view(), name='profile_tracking'),
+    url('^profile/edit-info/$', views.ProfileEditInfo.as_view(), name='profile_edit_info'),
 ]
 
 if settings.DEBUG:
