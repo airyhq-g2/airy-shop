@@ -263,9 +263,15 @@ class ProfileTrackingView(LoginRequiredMixin, ListView):
         if self.request.user.is_authenticated:
             orders = Order.objects.filter(user=self.request.user)
             sub_total_price = 0
-            transaction = orders.first().transaction 
+            transaction = Transsaction.objects.create(
+                user="",
+                shipping="",
+                status="inactive",
+                date="00/00/00"
+            )
+            order.save()
             try:
-                
+                transaction = orders.first().transaction 
                 sub_total_price = transaction.get_grand_total_price()
             except AttributeError as error:
                 sub_total_price = 0
