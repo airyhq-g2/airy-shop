@@ -7,9 +7,10 @@
 {% endblock %}
 {% block body %}
     <div class="container flex-row">
-        {% include 'main/profile-sidebar.html' %}
+        {% include 'profile/sidebar.html' %}
         <div class="w-70 ml-32">
             <h1>Edit Information</h1>
+            <p>Only input in fields that you want to change.</p>
             <form class="form-flex-col" action="" method="post">
                 {% csrf_token %}
                 {{ form }}

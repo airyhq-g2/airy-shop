@@ -1,19 +1,18 @@
 from django.contrib.auth import login, authenticate, views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, JsonResponse, Http404
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, FormView
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import SignUpForm, OrderForm, UserEditForm
+from .forms import SignUpForm, OrderForm, UserEditForm, UploadPayInForm
 from .models import Product, Order, Transaction, UserInfo
 from django.contrib.auth.models import User
 
-
 def get_cart_context(user):
     if not user.is_authenticated: return {}
-    transaction = Transaction.objects.get_or_create(user=user, status='active')[0]
+    transaction = Transaction.objects.get(user=user, status='active')
     orders = transaction.order_set.all()
     grand_total_price = transaction.get_grand_total_price()
     sub_total_price = transaction.get_sub_total_price()
@@ -87,13 +86,11 @@ def registerView(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-
-            user = UserInfo.objects.create(
-                user=username,
-                address="1150/1112",
-                birth_date = "01/01/0001"
-            )
-            userInfo.save()
+            Transaction.objects.create(
+                user=user,
+                status='active'
+            ).save()
+            UserInfo.objects.create(user=user).save()
             return redirect('/catalogue')
     else:
         form = SignUpForm()
@@ -123,10 +120,16 @@ def addToCart(request):
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
             pk = form.cleaned_data.get('product')
-            transaction = Transaction.objects.get(
-                user=request.user,
-                status='active',
-            )
+            try:
+                transaction = Transaction.objects.get(
+                    user=request.user,
+                    status='active',
+                )
+            except ObjectDoesNotExist:
+                transaction = Transaction.objects.create(
+                    user=request.user,
+                    status="active"
+                )
             transaction.save()
             order = Order.objects.create(
                 user=request.user,
@@ -190,10 +193,19 @@ def change_shipping(request):
 
 
 class PaymentSlipView(LoginRequiredMixin, ListView):
-    template_name = 'main/paymeny-slip.html'
+    template_name = 'main/payment-slip.html'
     model = Order
     login_url = reverse_lazy('main:login')
 
+    def get(self, request, *args, **kwargs):
+        user_info = UserInfo.objects.get(user=request.user)
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+        address = user_info.address
+        if first_name != '' and last_name != '' and address != '':
+            return super(PaymentSlipView, self).get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse_lazy('main:profile_edit_info'))
 
     def get_queryset(self):
         self.transaction = Transaction.objects.get(pk=self.kwargs['pk'])
@@ -209,12 +221,12 @@ class PaymentSlipView(LoginRequiredMixin, ListView):
 
 
 class ProfileDashBoardView(LoginRequiredMixin, DetailView):
-    template_name = 'main/profile-dashboard.html'
+    template_name = 'profile/dashboard.html'
     model = UserInfo
     login_url = reverse_lazy('main:login')
 
     def get_object(self, queryset=None):
-        return UserInfo.objects.get_or_create(user=self.request.user)[0]
+        return UserInfo.objects.get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDashBoardView, self).get_context_data(**kwargs)
@@ -223,7 +235,7 @@ class ProfileDashBoardView(LoginRequiredMixin, DetailView):
 
 
 class ProfileTrackingView(LoginRequiredMixin, ListView):
-    template_name = 'main/profile-tracking.html'
+    template_name = 'profile/tracking.html'
     model = Transaction
     login_url = reverse_lazy('main:login')
 
@@ -238,14 +250,14 @@ class ProfileTrackingView(LoginRequiredMixin, ListView):
 
 
 class ProfileEditInfo(LoginRequiredMixin, FormView):
-    template_name = 'main/profile-edit-infomation.html'
+    template_name = 'profile/edit-info.html'
     form_class = UserEditForm
     success_url = reverse_lazy('main:profile_dashboard')
     login_url = reverse_lazy('main:login')
 
     def form_valid(self, form):
         user = User.objects.get(pk=self.request.user.pk)
-        user_info = UserInfo.objects.get_or_create(user=self.request.user)[0]
+        user_info = UserInfo.objects.get(user=self.request.user)
 
         user_name = form.cleaned_data.get('user_name')
         email = form.cleaned_data.get('email')
@@ -270,3 +282,21 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
         context = super(ProfileEditInfo, self).get_context_data(**kwargs)
         context.update(get_cart_context(self.request.user))
         return context
+
+
+class ProfileUploadPayInView(LoginRequiredMixin, FormView):
+    template_name = 'profile/upload-pay-in.html'
+    success_url = reverse_lazy('main:profile_dashboard')
+    login_url = reverse_lazy('main:login')
+    form_class = UploadPayInForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileUploadPayInView, self).get_context_data(**kwargs)
+        context.update(get_cart_context(self.request.user))
+        return context
+
+    def form_valid(self, form):
+        transaction = Transaction.objects.get(user=self.request.user, status='active')
+        transaction.slip = form.cleaned_data.get('slip')
+        transaction.save()
+        return super(ProfileUploadPayInView, self).form_valid(form)

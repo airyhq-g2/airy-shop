@@ -7,7 +7,7 @@
 {% endblock %}
 {% block body %}
     <div class="container flex-row align-items-center">
-        {% include 'main/profile-sidebar.html' %}
+        {% include 'profile/sidebar.html' %}
         <div class="w-70 ml-32">
             <div class="full-width">
                 <h1>Tracking System</h1>
@@ -16,19 +16,24 @@
                 <tr class="bg-black">
                     <th style="
                     color: white;
-                ">ID</th>
+                ">ID
+                    </th>
                     <th style="
                     color: white;
-                ">Products</th>
+                ">Products
+                    </th>
                     <th style="
                     color: white;
-                ">Shipping</th>
+                ">Shipping
+                    </th>
                     <th style="
                     color: white;
-                ">Status</th>
+                ">Status
+                    </th>
                     <th style="
                     color: white;
-                ">Date</th>
+                ">Date
+                    </th>
                 </tr>
                 {% for object in object_list %}
                     <tr>
