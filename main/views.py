@@ -300,3 +300,6 @@ class ProfileUploadPayInView(LoginRequiredMixin, FormView):
         transaction.slip = form.cleaned_data.get('slip')
         transaction.save()
         return super(ProfileUploadPayInView, self).form_valid(form)
+
+def contactView(request):
+    return render(request, 'main/contact.html')
