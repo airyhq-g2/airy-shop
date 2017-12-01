@@ -248,6 +248,8 @@ class ProfileDashBoardView(LoginRequiredMixin, DetailView):
 
 
 class ProfileTrackingView(LoginRequiredMixin, ListView):
+    if request.method != 'POST':
+        return HttpResponseRedirect(reverse_lazy('main:cart'))
     template_name = 'main/profile-tracking.html'
     model = Transaction
 
