@@ -174,7 +174,7 @@ body {
     transition: .5s ease;
 }
 
-.btn-black {
+.btn-brown {
     background: #b2a586;
     color: white;
     padding: 8px 64px 8px 64px;
@@ -221,6 +221,7 @@ body {
 
 .mt-16 {
     margin-top: 16px;
+    margin-bottom: 70px;
 }
 
 .mb-16 {
