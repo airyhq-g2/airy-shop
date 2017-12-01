@@ -328,6 +328,6 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
         context.update(self.additional_context)
         return context
 
-class Contact(request):
+def Contact(request):
     return render(request, 'main/contact.html')
 #test
