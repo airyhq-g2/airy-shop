@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate, views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, FormView
@@ -11,6 +11,19 @@ from .models import Product, Order, Transaction, UserInfo
 from django.contrib.auth.models import User
 
 
+def get_cart_context(user):
+    if not user.is_authenticated: return {}
+    transaction = Transaction.objects.get_or_create(user=user, status='active')[0]
+    orders = transaction.order_set.all()
+    grand_total_price = transaction.get_grand_total_price()
+    sub_total_price = transaction.get_sub_total_price()
+    return {
+        'orders': orders,
+        'sub_total_price': sub_total_price,
+        'grand_total_price': grand_total_price,
+        'transaction': transaction,
+    }
+
 def indexView(request):
     return render(request, 'main/index.html')
 
@@ -18,24 +31,10 @@ def indexView(request):
 class CatalogueView(ListView):
     template_name = 'main/catalogue.html'
     model = Product
-    additional_context = {}
 
-    def get_context_data(self, *args, **kwargs):
-
-        if self.request.user.is_authenticated:
-            orders = Order.objects.filter(user=self.request.user)
-            sub_total_price = 0
-            try:
-                transaction = orders.first().transaction
-                sub_total_price = transaction.get_grand_total_price()
-            except AttributeError as error:
-                sub_total_price = 0
-            self.additional_context = {
-                'cart': orders,
-                'sub_total_price': sub_total_price
-            }
+    def get_context_data(self, **kwargs):
         context = super(CatalogueView, self).get_context_data(**kwargs)
-        context.update(self.additional_context)
+        context.update(get_cart_context(self.request.user))
         return context
 
     def get_queryset(self):
@@ -62,23 +61,9 @@ class ProductDetailView(DetailView):
     template_name = 'main/product-detail.html'
     model = Product
 
-    additional_context = {}
-
-    def get_context_data(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            orders = Order.objects.filter(user=self.request.user)
-            sub_total_price = 0
-            try:
-                transaction = orders.first().transaction
-                sub_total_price = transaction.get_grand_total_price()
-            except AttributeError as error:
-                sub_total_price = 0
-            self.additional_context = {
-                'cart': orders,
-                'sub_total_price': sub_total_price
-            }
+    def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
-        context.update(self.additional_context)
+        context.update(get_cart_context(self.request.user))
         return context
 
 
@@ -86,6 +71,11 @@ class LoginView(views.LoginView):
     template_name = 'main/login.html'
     redirect_authenticated_user = True
     redirect_field_name = reverse_lazy('main:catalogue')
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        context.update(get_cart_context(self.request.user))
+        return context
 
 
 def registerView(request):
@@ -117,19 +107,12 @@ class CartView(LoginRequiredMixin, ListView):
     model = Order
 
     def get_queryset(self):
-        transaction = Transaction.objects.get_or_create(user=self.request.user, shipping='KERRY', status='active')[0]
-        return Order.objects.filter(transaction=transaction)
+        transaction = Transaction.objects.get(user=self.request.user, status='active')
+        return transaction.order_set.all()
 
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
-        orders = Order.objects.filter(user=self.request.user)
-        transaction = orders.first().transaction
-        context.update({
-            'cart': orders,
-            'sub_total_price': transaction.get_sub_total_price(),
-            'grand_total_price': transaction.get_grand_total_price(),
-            'transaction': transaction.pk
-        })
+        context.update(get_cart_context(self.request.user))
         return context
 
 
@@ -140,17 +123,16 @@ def addToCart(request):
         if form.is_valid():
             amount = form.cleaned_data.get('amount')
             pk = form.cleaned_data.get('product')
-            shipping = 'KERRY'
-            transaction = Transaction.objects.get_or_create(
+            transaction = Transaction.objects.get(
                 user=request.user,
                 status='active',
-                shipping=shipping
             )
+            transaction.save()
             order = Order.objects.create(
                 user=request.user,
                 product=Product.objects.get(pk=pk),
                 amount=amount,
-                transaction=transaction[0]
+                transaction=transaction
             )
             order.save()
     return HttpResponseRedirect(reverse_lazy('main:catalogue'))
@@ -207,9 +189,11 @@ def change_shipping(request):
         return JsonResponse({'err': error.__str__()})
 
 
-class PaymentSlipView(ListView):
+class PaymentSlipView(LoginRequiredMixin, ListView):
     template_name = 'main/paymeny-slip.html'
     model = Order
+    login_url = reverse_lazy('main:login')
+
 
     def get_queryset(self):
         self.transaction = Transaction.objects.get(pk=self.kwargs['pk'])
@@ -217,82 +201,47 @@ class PaymentSlipView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PaymentSlipView, self).get_context_data(**kwargs)
-        context.update({'transaction': self.transaction})
+        context.update({
+            'transaction': self.transaction,
+            'user_info': UserInfo.objects.get(user=self.request.user)
+        })
         return context
 
 
 class ProfileDashBoardView(LoginRequiredMixin, DetailView):
     template_name = 'main/profile-dashboard.html'
     model = UserInfo
-
-    additional_context = {}
+    login_url = reverse_lazy('main:login')
 
     def get_object(self, queryset=None):
         return UserInfo.objects.get_or_create(user=self.request.user)[0]
 
-    def get_context_data(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            orders = Order.objects.filter(user=self.request.user)
-            try:
-                active_transaction = Transaction.objects.get(user=self.request.user, status='active')
-            except ObjectDoesNotExist:
-                active_transaction = None
-            try:
-                transaction = orders.first().transaction
-                sub_total_price = transaction.get_grand_total_price()
-            except AttributeError as error:
-                sub_total_price = None
-                transaction = None
-            self.additional_context = {
-                'cart': orders,
-                'sub_total_price': sub_total_price,
-                'transaction': transaction,
-                'active_transaction': active_transaction
-            }
+    def get_context_data(self, **kwargs):
         context = super(ProfileDashBoardView, self).get_context_data(**kwargs)
-        context.update(self.additional_context)
+        context.update(get_cart_context(self.request.user))
         return context
 
 
 class ProfileTrackingView(LoginRequiredMixin, ListView):
     template_name = 'main/profile-tracking.html'
     model = Transaction
+    login_url = reverse_lazy('main:login')
 
-    additional_context = {}
 
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
 
     def get_context_data(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            orders = Order.objects.filter(user=self.request.user)
-            sub_total_price = 0
-            try:
-                transaction = orders.first().transaction
-                sub_total_price = transaction.get_grand_total_price()
-            except AttributeError as error:
-                sub_total_price = 0
-            self.additional_context = {
-                'cart': orders,
-                'sub_total_price': sub_total_price,
-                'transaction': transaction
-            }
         context = super(ProfileTrackingView, self).get_context_data(**kwargs)
-        context.update(self.additional_context)
+        context.update(get_cart_context(self.request.user))
         return context
 
 
 class ProfileEditInfo(LoginRequiredMixin, FormView):
     template_name = 'main/profile-edit-infomation.html'
-
     form_class = UserEditForm
-
     success_url = reverse_lazy('main:profile_dashboard')
-
-    additional_context = {}
-
-    # def get_queryset(self):
-    #     return Transaction.objects.filter(user=self.request.user)
+    login_url = reverse_lazy('main:login')
 
     def form_valid(self, form):
         user = User.objects.get(pk=self.request.user.pk)
@@ -317,20 +266,7 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
 
         return super(ProfileEditInfo, self).form_valid(form)
 
-    def get_context_data(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            orders = Order.objects.filter(user=self.request.user)
-            sub_total_price = 0
-            try:
-                transaction = orders.first().transaction
-                sub_total_price = transaction.get_grand_total_price()
-            except AttributeError as error:
-                sub_total_price = 0
-            self.additional_context = {
-                'cart': orders,
-                'sub_total_price': sub_total_price,
-                'transaction': transaction,
-            }
+    def get_context_data(self, **kwargs):
         context = super(ProfileEditInfo, self).get_context_data(**kwargs)
-        context.update(self.additional_context)
+        context.update(get_cart_context(self.request.user))
         return context

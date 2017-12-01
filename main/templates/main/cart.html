@@ -49,7 +49,7 @@
         </div>
         <form action="" method="post" class="form-shipping">
             {% csrf_token %}
-            <input name="transaction" type="hidden" value="{{ transaction }}">
+            <input name="transaction" type="hidden" value="{{ transaction.pk }}">
             <h1>Shipping</h1>
             <div class="form-group">
                 <label for="select-shipping" hidden>shipping</label><br>
@@ -64,7 +64,7 @@
                 <strong>Grand Total: </strong>
                 <span id="grand-total-price">{{ grand_total_price }}$</span>
             </div>
-            <a class="btn btn-default text-c" href="{% url 'main:payment_slip' transaction %}">CONFIRM PAYMENT</a>
+            <a class="btn btn-default text-c" href="{% url 'main:payment_slip' transaction.pk %}">CONFIRM PAYMENT</a>
             <strong class="text-c mt-16 mb-16"> - OR - </strong>
             <a class="btn btn-white text-c" href="{% url 'main:catalogue' %}">CONTINUE SHOPPING</a>
         </form>
