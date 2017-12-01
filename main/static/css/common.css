@@ -174,8 +174,8 @@ body {
     transition: .5s ease;
 }
 
-.btn-brown {
-    background: #b2a586;
+.btn-black {
+    background: black;
     color: white;
     padding: 8px 64px 8px 64px;
 }
