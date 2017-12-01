@@ -328,4 +328,4 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
         context.update(self.additional_context)
         return context
 
-class ContactView(views.ContactView):
+class contact(views.contact):
