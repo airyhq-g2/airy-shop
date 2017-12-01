@@ -88,12 +88,6 @@ def registerView(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
-            users = UserInfo.objects.create(
-                user=User.natural_key,
-                address="1150/1112",
-                birth_date = "01/01/0001"
-            )
-            users.save()
             return redirect('/catalogue')
     else:
         form = SignUpForm()
