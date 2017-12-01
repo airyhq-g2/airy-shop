@@ -97,6 +97,13 @@ def registerView(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+
+            userInfo = UserInfo.objects.create(
+                user=username,
+                address="1150/1112",
+                birth_date = "01/01/0001"
+            )
+            userInfo.save()
             return redirect('/catalogue')
     else:
         form = SignUpForm()
