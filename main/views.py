@@ -327,3 +327,5 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
         context = super(ProfileEditInfo, self).get_context_data(**kwargs)
         context.update(self.additional_context)
         return context
+
+class ContactView(views.ContactView):
