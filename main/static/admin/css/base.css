@@ -729,7 +729,7 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 .object-tools a:focus, .object-tools a:hover {
-    background-color: #417690;
+    background-color: #101010;
 }
 
 .object-tools a:focus{
@@ -824,7 +824,7 @@ table#change-history tbody th {
     width: auto;
     height: 40px;
     padding: 10px 40px;
-    background: #417690;
+    background: #101010;
     line-height: 40px;
     color: #ffc;
     overflow: hidden;
@@ -859,7 +859,7 @@ table#change-history tbody th {
     font-size: 14px;
     margin: -8px 0 8px 0;
     font-weight: normal;
-    color: #ffc;
+    color: #white;
 }
 
 #branding a:hover {
@@ -890,7 +890,7 @@ table#change-history tbody th {
 /* SIDEBAR */
 
 #content-related {
-    background: #f8f8f8;
+    background: #white;
 }
 
 #content-related .module {
@@ -951,7 +951,7 @@ table#change-history tbody th {
     vertical-align: middle;
     height: 15px;
     line-height: 15px;
-    background: #ddd;
+    background: #white;
     border-radius: 4px;
     padding: 10px 15px;
     color: #333;
