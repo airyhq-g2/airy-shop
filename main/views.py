@@ -263,6 +263,7 @@ class ProfileTrackingView(LoginRequiredMixin, ListView):
         if self.request.user.is_authenticated:
             orders = Order.objects.filter(user=self.request.user)
             sub_total_price = 0
+            transaction = None
             try:
                 transaction = orders.first().transaction
                 sub_total_price = transaction.get_grand_total_price()
