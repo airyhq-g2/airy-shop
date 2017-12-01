@@ -330,3 +330,4 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
 
 class Contact(request):
     return render(request, 'main/contact.html')
+#test
