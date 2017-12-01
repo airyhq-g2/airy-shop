@@ -263,7 +263,7 @@ class ProfileTrackingView(LoginRequiredMixin, ListView):
         if self.request.user.is_authenticated:
             orders = Order.objects.filter(user=self.request.user)
             sub_total_price = 0
-            transaction = Transsaction.objects.create(
+            transaction = Transaction.objects.create(
                 user="",
                 shipping="",
                 status="inactive",
