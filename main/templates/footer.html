@@ -1,6 +1,8 @@
 <footer class="footer mt-16">
     <div class="flex-row">
-        <button class="btn-white full-width">FREE WORLDWIDE SHIPPING</button>
+        <button class="btn-white full-width" style="
+        font-family: LogoFont;
+    ">FREE WORLDWIDE SHIPPING</button>
     </div>
     <div class="flex-row space-around mt-16 wrap">
         <div class="flex-col text-l">
@@ -9,22 +11,50 @@
         </div>
         <div class="flex-col text-l">
             <strong>HELP</strong>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'main:profile_tracking' %}" style="color:#000000;">
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'main:login' %}" style="color:#000000;">
+            {% endif %}
             <small>Delivery</small>
+            </a>
+            <a href="{% url 'main:change-shipping' %}" style="color:#000000;">
             <small>Order & Returns</small>
+            </a>
+            <a href="https://ask.fm/" style="color:#000000;">
             <small>Other FAQ</small>
+            </a>
+            <a href="{% url 'main:index' %}" style="color:#000000;">
             <small>Contact us</small>
+            </a>
         </div>
         <div class="flex-col text-l">
             <strong>AIRY SOCIAL</strong>
+            <a href="https://twitter.com/" style="color:#000000;">
             <small>Twitter</small>
+            </a>
+            <a href="https://www.facebook.com/" style="color:#000000;">
             <small>Facebook</small>
+            </a>
+            <a href="https://www.instagram.com/" style="color:#000000;">
             <small>Instragram</small>
+            </a>
+            <a href="https://www.instagram.com/" style="color:#000000;">
             <small>Shop Insta</small>
+            </a>
         </div>
         <div class="flex-col text-l">
             <strong>JOIN US</strong>
             <label for="join-us-email" style="margin-bottom: 12px;font-size: 10px;">Enter your email to receiver updates and offers</label>
-            <input type="email" name="join-us-email" id="join-us-email">
+            <input type="email" name="join-us-email" id="join-us-email" required
+            placeholder="....@example.com" list="defaultEmails">
+                <datalist id="defaultEmails">
+                    <option value="...@hotmail.com">
+                    <option value="...@email.com">
+                    <option value="...@gmail.com">
+                    <option value="...@ku.th">
+                </datalist>
         </div>
     </div>
     <div class="flex-row space-around mt-16">

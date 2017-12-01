@@ -50,26 +50,17 @@
     <div class="collapse-menu" id="hamburger-menu">
         <ul class="collapse-ul">
             <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Guys</strong></a>
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Catalogue</strong></a>
+                </li>
+                <li class="collapse-li">
+                        <a href="{% url 'main:cart' %}" class="unstyled-link"><strong>Cart</strong></a>
+                    </li>
+            <li class="collapse-li">
+                <a href="{% url 'main:login' %}" class="unstyled-link"><strong>Login</strong></a>
             </li>
             <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Girls</strong></a>
-            </li>
-            <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Accessories</strong></a>
-            </li>
-            <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Unisex</strong></a>
-            </li>
-            <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Editorial</strong></a>
-            </li>
-            <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Search</strong></a>
-            </li>
-            <li class="collapse-li">
-                <a href="{% url 'main:catalogue' %}" class="unstyled-link"><strong>Our Stores</strong></a>
-            </li>
+                    <a href="{% url 'main:register' %}" class="unstyled-link"><strong>Register</strong></a>
+                </li>
         </ul>
     </div>
     <div class="container">
@@ -79,36 +70,16 @@
             </a>
             <ul class="sidebar-ul">
                 <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Guys</a>
-                </li>
-                <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Girls</a>
-                </li>
-                <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Accessories</a>
-                </li>
-                <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Unisex</a>
+                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Catalogue</a>
                 </li>
             </ul>
             <ul class="sidebar-ul">
                 <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Editorials</a>
-                </li>
-            </ul>
-            <ul class="sidebar-ul">
-                <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Search</a>
+                    <a href="{% url 'main:login' %}" class="unstyled-link-white transition-5">Login</a>
                 </li>
                 <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Our Stores</a>
-                </li>
-                <li class="mb-8">
-                    <a href="{% url 'main:login' %}" class="unstyled-link-white transition-5">My Account</a>
-                </li>
-                <li class="mb-8">
-                    <a href="{% url 'main:catalogue' %}" class="unstyled-link-white transition-5">Get Help</a>
-                </li>
+                        <a href="{% url 'main:register' %}" class="unstyled-link-white transition-5">Register</a>
+                    </li>
             </ul>
         </nav>
         <div class="promotion">

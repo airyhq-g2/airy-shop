@@ -8,7 +8,7 @@
 {% endblock %}
 {% block body %}
     <a href="{% url 'main:catalogue' %}" class="unstyled-link">Back to Catalogue</a>
-    <div class="container bg-light-brown mt-16">
+    <div class="container mt-16">
         <div class="product-item mb-16">
             <img class="product-img" src="{{ object.pic.url }}" alt="product-img">
         </div>
@@ -27,7 +27,7 @@
                     <label for="amount">Quantity:</label>
                     <input name="amount" id="amount" type="number" min="1" value="1">
                     <div class="ma-16"></div>
-                    <input class="btn btn-brown" type="submit" value="ADD TO CART">
+                    <input class="btn" type="submit" value="ADD TO CART">
                 </form>
                 <div class="flex-row ma-16 space-around">
                     <a class="btn btn-icon">
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div id="product-detail" class="product-detail bg-brown">
+    <div id="product-detail" class="product-detail bg-black">
         <h3><strong>Product Details</strong></h3>
         <p>{{ object.desc }}</p>
     </div>

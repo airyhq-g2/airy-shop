@@ -13,24 +13,44 @@
                 <h1>Tracking System</h1>
             </div>
             <table class="full-width">
-                <tr class="bg-brown">
-                    <th>ID</th>
-                    <th>Products</th>
-                    <th>Shipping</th>
-                    <th>Status</th>
-                    <th>Date</th>
+                <tr class="bg-black">
+                    <th style="
+                    color: white;
+                ">ID</th>
+                    <th style="
+                    color: white;
+                ">Products</th>
+                    <th style="
+                    color: white;
+                ">Shipping</th>
+                    <th style="
+                    color: white;
+                ">Status</th>
+                    <th style="
+                    color: white;
+                ">Date</th>
                 </tr>
                 {% for object in object_list %}
                     <tr>
-                        <td>{{ object.pk }}</td>
-                        <td>
+                        <td style="
+                        text-align: center;
+                    ">{{ object.pk }}</td>
+                        <td style="
+                        text-align: center;
+                    ">
                             {% for order in object.order_set.all %}
                                 {{ order.product.name }}<br>
                             {% endfor %}
                         </td>
-                        <td>{{ object.shipping }}</td>
-                        <td>{{ object.status }}</td>
-                        <td>{{ object.date }}</td>
+                        <td style="
+                        text-align: center;
+                    ">{{ object.shipping }}</td>
+                        <td style="
+                        text-align: center;
+                    ">{{ object.status }}</td>
+                        <td style="
+                        text-align: center;
+                    ">{{ object.date }}</td>
                     </tr>
                 {% endfor %}
 

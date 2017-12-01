@@ -35,44 +35,78 @@
     <div class="flex-row mb-32">
         <table class="w-50">
             <tr>
-                <th class="bg-brown">Address to delivery</th>
+                <th class="bg-black" style="
+                color: white;
+            ">Address to delivery</th>
             </tr>
             <tr>
-                <td><strong>Name: </strong> {{ request.user.first_name }} {{ request.user.last_name }}</td>
+                <td style="
+                text-align: center;
+            "><strong>Name: </strong> {{ request.user.first_name }} {{ request.user.last_name }} </td>
             </tr>
             <tr>
-                <td><strong>Address: </strong> {{ user_info.address }}</td>
+                <td style="
+                text-align: center;
+            "><strong>Address: </strong> {{ user_info.address }}</td>
             </tr>
         </table>
         <table class="w-50">
             <tr>
-                <th class="bg-brown">Transaction Detail</th>
+                <th class="bg-black" style="
+                color: white;
+            ">Transaction Detail</th>
             </tr>
             <tr>
-                <td><strong>Date: </strong> {{ transaction.date }}</td>
+                <td style="
+                text-align: center;
+            "><strong>Date: </strong> {{ transaction.date }}</td>
             </tr>
             <tr>
-                <td><strong>Customer ID: </strong> {{ request.user.pk }}</td>
+                <td style="
+                text-align: center;
+            "><strong>Customer ID: </strong> {{ request.user.pk }}</td>
             <tr>
-                <td><strong>Transaction ID:</strong> {{ transaction.pk }}</td>
+                <td style="
+                text-align: center;
+            "><strong>Transaction ID:</strong> {{ transaction.pk }}</td>
             </tr>
         </table>
     </div>
     <table class="full-width mb-32">
-        <tr class="bg-brown">
-            <th class="w-20">ID</th>
-            <th class="w-20">Name</th>
-            <th class="w-20">Price</th>
-            <th class="w-20">Amount</th>
-            <th class="w-20">Total</th>
+        <tr class="bg-black">
+            <th class="w-20" style="
+            color: white;
+        ">ID</th>
+            <th class="w-20" style="
+            color: white;
+        ">Name</th>
+            <th class="w-20" style="
+            color: white;
+        ">Price</th>
+            <th class="w-20" style="
+            color: white;
+        ">Amount</th>
+            <th class="w-20" style="
+            color: white;
+        ">Total</th>
         </tr>
         {% for object in object_list %}
             <tr>
-                <td>{{ object.pk }}</td>
-                <td>{{ object.product.name }}</td>
-                <td>{{ object.product.price }}</td>
-                <td>{{ object.amount }}</td>
-                <td>{{ object.get_total_price }}</td>
+                <td style="
+                text-align: center;
+            ">{{ object.pk }}</td>
+                <td style="
+                text-align: center;
+            ">{{ object.product.name }}</td>
+                <td style="
+                text-align: center;
+            ">{{ object.product.price }}</td>
+                <td style="
+                text-align: center;
+            ">{{ object.amount }}</td>
+                <td style="
+                text-align: center;
+            ">{{ object.get_total_price }}</td>
             </tr>
         {% endfor %}
         <tr>
@@ -97,8 +131,10 @@
             <td>{{ transaction.get_grand_total_price }}</td>
         </tr>
     </table>
-    <div class="bg-brown text-c pa8">
-        <h1>Pay in slip</h1>
+    <div class="bg-black text-c pa8">
+        <h1 style="
+        color: white;
+    ">Pay in slip</h1>
     </div>
     <div class="flex-row full-width space-around align-items-center mb-32">
         <div class="flex-col pa8 w-40">
@@ -143,8 +179,10 @@
         </div>
     </div>
     <div>
-        <div class="full-width bg-brown pa8">
-            <h1 class="text-c">Bank Tranfer</h1>
+        <div class="full-width bg-black pa8">
+            <h1 class="text-c" style="
+            color: white;
+        ">Bank Tranfer</h1>
         </div>
         <div class="flex-row mt-16 wrap">
             <div class="flex-row align-items-center w-50">
