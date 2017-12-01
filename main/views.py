@@ -14,6 +14,9 @@ from django.contrib.auth.models import User
 def indexView(request):
     return render(request, 'main/index.html')
 
+def contactView(request):
+    return render(request, 'main/contact.html')
+#test
 
 class CatalogueView(ListView):
     template_name = 'main/catalogue.html'
@@ -328,6 +331,3 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
         context.update(self.additional_context)
         return context
 
-def Contact(request):
-    return render(request, 'main/contact.html')
-#test
