@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserInfo
-
+from .models import Transaction
 
 class OrderForm(forms.Form):
     amount = forms.IntegerField()
@@ -22,3 +21,9 @@ class UserEditForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=100, widget=forms.EmailInput, required=False)
     birth_date = forms.DateTimeField(label='Birth date', widget=forms.DateInput, required=False)
     address = forms.CharField(label='Address', max_length=500, widget=forms.Textarea, required=False)
+
+
+class UploadPayInForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ('slip',)

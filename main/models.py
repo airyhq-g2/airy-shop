@@ -23,13 +23,20 @@ class Product(models.Model):
     def __str__(self):
         return '{0}-{1}'.format(self.brand, self.name)
 
+
+def format_name_slip():
+    from django.utils import timezone
+    return 'imgs/{0}/'.format(timezone.now().__str__())
+
 class Transaction(models.Model):
     user = models.ForeignKey(User)
     shipping = models.CharField(max_length=250, default='KERRY')
     status = models.CharField(max_length=250)
     date = models.DateTimeField(auto_now=True)
+    slip = models.ImageField(upload_to=format_name_slip(), max_length=500, default="../static/imgs/empty.png")
 
     def get_shipping_fee(self):
+        if self.get_sub_total_price() == 0: return 0
         if (self.shipping == 'GRAB_BIKE'):
             return 100
         elif (self.shipping == 'LINE_MAN'):

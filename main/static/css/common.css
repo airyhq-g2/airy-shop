@@ -385,6 +385,10 @@ select {
     width: 70%;
 }
 
+.b-b {
+    border: 1px solid black;
+}
+
 input {
     border-color: lightgrey;
     background: white;

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+{% endblock %}
+{% block title %}
+    Profile Edit Information
+{% endblock %}
+{% block body %}
+    <div class="container flex-row">
+        {% include 'profile/sidebar.html' %}
+        <div class="w-70 ml-32">
+            {% if not transaction %}
+                <h1>You don't have any active transaction.</h1>
+                <a href="{% url 'main:catalogue' %}" class="b-b pa8 unstyled-link">Get some stuff</a>
+            {% else %}
+                <h1>Upload Pay-In slip</h1>
+                <form class="form-flex-col" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input class="btn btn-default" type="submit" value="Upload">
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

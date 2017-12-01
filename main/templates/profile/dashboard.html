@@ -7,14 +7,15 @@
 {% endblock %}
 {% block body %}
     <div class="container flex-row">
-        {% include 'main/profile-sidebar.html' %}
+        {% include 'profile/sidebar.html' %}
         <div class="w-70 ml-32">
             <h1>Welcome {{ request.user }}</h1>
             <table class="full-width">
                 <tr class="bg-black">
                     <th style="
                     color: white;
-                ">User Infomation</th>
+                ">User Infomation
+                    </th>
                 </tr>
                 <tr>
                     <td><strong>User name: </strong>{{ request.user }}</td>
@@ -32,13 +33,12 @@
                     <td><strong>Birth Date: </strong>{{ object.birth_date }}</td>
                 </tr>
             </table>
-            {% if active_transaction != None %}
+            {% if transaction.order_set.all %}
                 <h1>Your have an active transaction</h1>
-                <div class="flex-col">
-                    <a class="text-c btn-default unstyled-link-white"
-                       href="{% url 'main:payment_slip' transaction.pk %}">Print payment slip</a>
-                    <a class="mt-16 text-c btn-default">Upload Pay-in Slip</a>
-                </div>
+                <a class="b-b unstyled-link pa8"
+                   href="{% url 'main:payment_slip' transaction.pk %}">Print payment slip</a>
+                <a href="{% url 'main:profile_upload_pay_in' %}" class="mt-16 b-b unstyled-link pa8">Upload Pay-in
+                    Slip</a>
             {% endif %}
         </div>
     </div>
