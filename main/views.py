@@ -329,4 +329,4 @@ class ProfileEditInfo(LoginRequiredMixin, FormView):
         return context
 
 class contact(request):
-    eturn render(request, 'main/contact.html')
+    return render(request, 'main/contact.html')
