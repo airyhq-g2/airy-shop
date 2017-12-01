@@ -28,7 +28,6 @@ urlpatterns = [
     url('^profile/edit-info/$', views.ProfileEditInfo.as_view(), name='profile_edit_info'),
     url('^profile/upload-pay-in/$', views.ProfileUploadPayInView.as_view(), name='profile_upload_pay_in'),
     # url('^contact/$', views.ContactView.as_view(), name='contact'),
-    url('^contact/$', views.contactView, name='contact'),
 ]
 
 if settings.DEBUG:
