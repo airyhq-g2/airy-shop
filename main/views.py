@@ -264,12 +264,12 @@ class ProfileTrackingView(LoginRequiredMixin, ListView):
             orders = Order.objects.filter(user=self.request.user)
             sub_total_price = 0
             transaction = Transaction.objects.create(
-                user=User,
+                user=User._get_pk_val,
                 shipping="",
                 status="inactive",
                 date="00/00/00"
             )
-            order.save()
+            transaction.save()
             try:
                 transaction = orders.first().transaction 
                 sub_total_price = transaction.get_grand_total_price()
