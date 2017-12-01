@@ -1,9 +1,26 @@
 {% extends "admin/change_list.html" %}
 
 {% block content_title %}
-    <h1>Managerrrrr</h1>
+    <h1>Sale Summary</h1>
 {% endblock %}
 {% block result_list %}
-    our content here
+    <h1>Summary Sale: <strong>{{ summary_sale }}</strong></h1>
+    <h1>Summary Order: <strong>{{ summary_order }}</strong></h1>
+    <table>
+        <tr>
+            <td>Brand</td>
+            <td>Total Order</td>
+            <td>Total Sale</td>
+            <td>% Of Summary Sale</td>
+        </tr>
+        {% for s in summary %}
+            <tr>
+                {% for attr in s %}
+                    <td>{{ attr }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+    </table>
 {% endblock %}
 {% block pagination %} {% endblock %}
