@@ -89,11 +89,11 @@ def registerView(request):
             login(request, user)
 
             users = UserInfo.objects.create(
-                user=form,
+                user=User,
                 address="1150/1112",
                 birth_date = "01/01/0001"
             )
-            userInfo.save()
+            users.save()
             return redirect('/catalogue')
     else:
         form = SignUpForm()
