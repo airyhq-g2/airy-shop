@@ -88,7 +88,7 @@ def registerView(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
-            user = UserInfo.objects.create(
+            User = UserInfo.objects.create(
                 user=username,
                 address="1150/1112",
                 birth_date = "01/01/0001"
