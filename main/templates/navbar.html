@@ -113,13 +113,13 @@
     </strong>
     </p>
     <h1 class="ml-16">Cart</h1>
-    {% if cart %}
+    {% if orders %}
         <div class="total-section">
             <strong>PRODUCT NAME</strong>
             <span>PRICE</span>
         </div>
         <div class="dot-divider"></div>
-        {% for order in cart %}
+        {% for order in orders %}
             <div class="total-section">
                 <strong>
                     <a href="{% url 'main:product_detail' order.product.pk %}" class="unstyled-link">

@@ -14,7 +14,7 @@
 <div class="flex-col mr-32 ml-32">
     <div class="flex-row">
         <div class="mr-16">
-            <img src="{% static 'imgs/brand_logo_inverse.svg' %}" alt="brand-logo" width="100" height="100">
+            <img src="{% static 'imgs/brand_logo_inverse.png' %}" alt="brand-logo" width="100">
         </div>
         <div class="ml-16 mb-32">
             <div>Airy Co.Ltd;</div>
@@ -38,10 +38,10 @@
                 <th class="bg-brown">Address to delivery</th>
             </tr>
             <tr>
-                <td><strong>Name: </strong> {{ request.user }}</td>
+                <td><strong>Name: </strong> {{ request.user.first_name }} {{ request.user.last_name }}</td>
             </tr>
             <tr>
-                <td><strong>Address: </strong> Middle of nowhere</td>
+                <td><strong>Address: </strong> {{ user_info.address }}</td>
             </tr>
         </table>
         <table class="w-50">
@@ -102,7 +102,7 @@
     </div>
     <div class="flex-row full-width space-around align-items-center mb-32">
         <div class="flex-col pa8 w-40">
-            <img src="{% static 'imgs/brand_logo_inverse.svg' %}" alt="brand-logo" width="100" height="100">
+            <img src="{% static 'imgs/brand_logo_inverse.png' %}" alt="brand-logo" width="100">
             <div>
                 Airy Co.Ltd;
             </div>
@@ -124,7 +124,7 @@
                 <tbody>
                 <tr>
                     <td><strong>Customers name: </strong></td>
-                    <td>{{ request.user }}</td>
+                    <td>{{ request.user.first_name }} {{ request.user.last_name }}</td>
                 </tr>
                 <tr>
                     <td><strong>Customers ID: </strong></td>
@@ -241,7 +241,7 @@
                         Promtpay : 0 1255 5501 4685
                     </div>
                     <div class="">
-                        (Transfer more than 500 Bath Free transfer fee)
+                        (Transfer more than 5000 Bath Free transfer fee)
                     </div>
 
                 </div>
