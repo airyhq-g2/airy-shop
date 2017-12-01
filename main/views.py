@@ -89,7 +89,7 @@ def registerView(request):
             login(request, user)
 
             users = UserInfo.objects.create(
-                user=User,
+                user=User.natural_key,
                 address="1150/1112",
                 birth_date = "01/01/0001"
             )
