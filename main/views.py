@@ -303,3 +303,4 @@ class ProfileUploadPayInView(LoginRequiredMixin, FormView):
 
 def contactView(request):
     return render(request, 'main/contact.html')
+#test
